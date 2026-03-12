@@ -11,8 +11,19 @@ import {
   LineChart,
   Line,
 } from "recharts";
+import {
+  Monitor,
+  Fingerprint,
+  AlertCircle,
+  Gavel,
+  ShieldAlert,
+  Shield,
+  Cpu,
+  Clock,
+} from "lucide-react";
 import { MetricCard } from "./MetricCard";
 import { Card } from "@/components/ui/Card";
+import { ChartTableCard } from "@/components/ui/ChartTableCard";
 import { Badge } from "@/components/ui/Badge";
 import { severityColor, topFromAlerts, safeList, safeDict } from "@/lib/utils";
 import type {
@@ -26,6 +37,16 @@ interface ExecutiveOverviewProps {
   incident: Incident | null;
   finalReport: FinalReport | null;
 }
+
+const stagger = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.06 } },
+};
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 16 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.4 } },
+};
 
 export function ExecutiveOverview({
   incident,
@@ -80,87 +101,100 @@ export function ExecutiveOverview({
 
   return (
     <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
+      variants={stagger}
+      initial="hidden"
+      animate="show"
       className="space-y-6"
     >
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
-        <MetricCard label="Host" value={incident.host ?? "-"} delay={0} />
-        <MetricCard label="Agent ID" value={incident.agent_id ?? "-"} delay={0.05} />
-        <MetricCard label="Alert Count" value={incident.alert_count ?? 0} delay={0.1} />
+      <motion.div variants={fadeUp} className="grid grid-cols-2 gap-3 sm:gap-4 sm:grid-cols-3 lg:grid-cols-5">
+        <MetricCard label="Host" value={incident.host ?? "-"} delay={0} icon={Monitor} />
+        <MetricCard label="Agent ID" value={incident.agent_id ?? "-"} delay={0.05} icon={Fingerprint} />
+        <MetricCard label="Alert Count" value={incident.alert_count ?? 0} delay={0.1} icon={AlertCircle} />
         <MetricCard
           label="Verdict"
           value={finalReport?.final_verdict ?? "-"}
           delay={0.15}
+          icon={Gavel}
         />
         <MetricCard
           label="Containment"
           value={String(finalReport?.containment_recommended ?? false)}
           delay={0.2}
+          icon={ShieldAlert}
         />
-      </div>
+      </motion.div>
 
-      <div className="grid gap-6 lg:grid-cols-[1.3fr_1fr]">
+      <motion.div variants={fadeUp} className="grid gap-6 lg:grid-cols-[1.3fr_1fr]">
         <Card>
-          <h3 className="mb-4 text-lg font-semibold text-white">
-            Executive Summary
-          </h3>
+          <div className="mb-4 flex items-center gap-2">
+            <Shield className="h-5 w-5 text-accent/60" />
+            <h3 className="text-lg font-semibold text-white">
+              Executive Summary
+            </h3>
+          </div>
           {finalReport ? (
-            <div className="space-y-2 text-sm text-white/90">
+            <div className="space-y-2.5 text-sm text-white/80">
               <p>
-                <span className="font-medium text-white/70">Incident ID:</span>{" "}
-                {finalReport.incident_id}
+                <span className="font-medium text-white/50">Incident ID:</span>{" "}
+                <span className="text-white">{finalReport.incident_id}</span>
               </p>
               <p>
-                <span className="font-medium text-white/70">Severity:</span>{" "}
+                <span className="font-medium text-white/50">Severity:</span>{" "}
                 <span className={severityColor(finalReport.severity)}>
                   {finalReport.severity}
                 </span>
               </p>
               <p>
-                <span className="font-medium text-white/70">Verdict:</span>{" "}
-                {finalReport.final_verdict}
+                <span className="font-medium text-white/50">Verdict:</span>{" "}
+                <span className="text-white">{finalReport.final_verdict}</span>
               </p>
               <p>
-                <span className="font-medium text-white/70">First Seen:</span>{" "}
+                <span className="font-medium text-white/50">First Seen:</span>{" "}
                 {String(firstSeen)}
               </p>
               <p>
-                <span className="font-medium text-white/70">Last Seen:</span>{" "}
+                <span className="font-medium text-white/50">Last Seen:</span>{" "}
                 {String(lastSeen)}
               </p>
-              <p className="mt-4">{finalReport.executive_summary}</p>
+              <div className="mt-4 rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 text-white/80">
+                {finalReport.executive_summary}
+              </div>
               <p className="mt-2">
-                <span className="font-medium text-white/70">
+                <span className="font-medium text-white/50">
                   Recommended Next Step:
                 </span>{" "}
-                {finalReport.recommended_next_step ?? "-"}
+                <span className="text-accent/80">
+                  {finalReport.recommended_next_step ?? "-"}
+                </span>
               </p>
             </div>
           ) : (
-            <p className="text-white/60">
+            <p className="text-white/40">
               Run Autonomous Incident Simulation to generate executive summary.
             </p>
           )}
         </Card>
 
         <Card>
-          <h3 className="mb-4 text-lg font-semibold text-white">
-            Top Risk Signals
-          </h3>
+          <div className="mb-4 flex items-center gap-2">
+            <Cpu className="h-5 w-5 text-accent/60" />
+            <h3 className="text-lg font-semibold text-white">
+              Top Risk Signals
+            </h3>
+          </div>
           <div className="space-y-4">
             <div>
-              <p className="mb-2 text-xs font-medium text-white/60">
+              <p className="mb-2 text-[11px] font-medium uppercase tracking-wider text-white/40">
                 Top Rules
               </p>
               <div className="flex flex-wrap gap-2">
                 {topRules.length
-                  ? topRules.map((r) => <Badge key={String(r)}>{String(r)}</Badge>)
-                  : "-"}
+                  ? topRules.map((r) => <Badge key={String(r)} variant="accent">{String(r)}</Badge>)
+                  : <span className="text-white/30">-</span>}
               </div>
             </div>
             <div>
-              <p className="mb-2 text-xs font-medium text-white/60">
+              <p className="mb-2 text-[11px] font-medium uppercase tracking-wider text-white/40">
                 Top Processes
               </p>
               <div className="flex flex-wrap gap-2">
@@ -168,40 +202,45 @@ export function ExecutiveOverview({
                   ? topProcesses.map((p) => (
                       <Badge key={String(p)}>{String(p)}</Badge>
                     ))
-                  : "-"}
+                  : <span className="text-white/30">-</span>}
               </div>
             </div>
             <div>
-              <p className="mb-2 text-xs font-medium text-white/60">
+              <p className="mb-2 text-[11px] font-medium uppercase tracking-wider text-white/40">
                 MITRE Mapping
               </p>
               <div className="flex flex-wrap gap-2">
                 {mitreMapping.length
                   ? mitreMapping.map((m) => (
-                      <Badge key={String(m)}>{String(m)}</Badge>
+                      <Badge key={String(m)} variant="warning">{String(m)}</Badge>
                     ))
-                  : "-"}
+                  : <span className="text-white/30">-</span>}
               </div>
             </div>
           </div>
         </Card>
-      </div>
+      </motion.div>
 
-      <div className="grid gap-6 lg:grid-cols-2">
-        <Card>
-          <h3 className="mb-4 text-lg font-semibold text-white">
-            Top Suspicious Processes
-          </h3>
+      <motion.div variants={fadeUp} className="grid gap-6 lg:grid-cols-2">
+        <ChartTableCard
+          title="Top Suspicious Processes"
+          columns={[
+            { key: "name", label: "name" },
+            { key: "count", label: "count" },
+          ]}
+          data={processesData}
+          csvFilename="top_suspicious_processes.csv"
+        >
           {processesData.length ? (
             <div className="h-64">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={processesData} layout="vertical" margin={{ left: 20 }}>
-                  <XAxis type="number" stroke="#94a3b8" fontSize={12} />
+                  <XAxis type="number" stroke="#475569" fontSize={12} />
                   <YAxis
                     type="category"
                     dataKey="name"
                     width={120}
-                    stroke="#94a3b8"
+                    stroke="#475569"
                     fontSize={11}
                     tickFormatter={(v) =>
                       String(v).length > 20 ? String(v).slice(0, 20) + "…" : v
@@ -209,85 +248,123 @@ export function ExecutiveOverview({
                   />
                   <Tooltip
                     contentStyle={{
-                      background: "#1e293b",
-                      border: "1px solid rgba(255,255,255,0.1)",
+                      background: "rgba(10,15,30,0.95)",
+                      border: "1px solid rgba(0,229,255,0.15)",
                       borderRadius: "8px",
+                      boxShadow: "0 0 20px rgba(0,229,255,0.1)",
                     }}
                     labelStyle={{ color: "#e2e8f0" }}
+                    cursor={{ fill: "rgba(0,229,255,0.06)" }}
                   />
-                  <Bar dataKey="count" fill="#00C9C9" radius={[0, 4, 4, 0]} />
+                  <Bar dataKey="count" fill="url(#barGradient)" radius={[0, 4, 4, 0]}>
+                  </Bar>
+                  <defs>
+                    <linearGradient id="barGradient" x1="0" y1="0" x2="1" y2="0">
+                      <stop offset="0%" stopColor="#00e5ff" stopOpacity={0.8} />
+                      <stop offset="100%" stopColor="#a855f7" stopOpacity={0.6} />
+                    </linearGradient>
+                  </defs>
                 </BarChart>
               </ResponsiveContainer>
             </div>
           ) : (
-            <p className="text-white/60">No process data.</p>
+            <p className="text-white/40">No process data.</p>
           )}
-        </Card>
-        <Card>
-          <h3 className="mb-4 text-lg font-semibold text-white">
-            Severity Distribution
-          </h3>
+        </ChartTableCard>
+        <ChartTableCard
+          title="Severity Distribution"
+          columns={[
+            { key: "bucket", label: "Severity Bucket" },
+            { key: "count", label: "Count" },
+          ]}
+          data={severityData}
+          csvFilename="severity_distribution.csv"
+        >
           {severityData.some((d) => d.count > 0) ? (
             <div className="h-64">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={severityData}>
-                  <XAxis dataKey="bucket" stroke="#94a3b8" fontSize={12} />
-                  <YAxis stroke="#94a3b8" fontSize={12} />
+                  <XAxis dataKey="bucket" stroke="#475569" fontSize={12} />
+                  <YAxis stroke="#475569" fontSize={12} />
                   <Tooltip
                     contentStyle={{
-                      background: "#1e293b",
-                      border: "1px solid rgba(255,255,255,0.1)",
+                      background: "rgba(10,15,30,0.95)",
+                      border: "1px solid rgba(0,229,255,0.15)",
                       borderRadius: "8px",
+                      boxShadow: "0 0 20px rgba(0,229,255,0.1)",
                     }}
+                    cursor={{ fill: "rgba(0,229,255,0.06)" }}
                   />
-                  <Bar dataKey="count" fill="#4DCAF0" radius={[4, 4, 0, 0]} />
+                  <Bar dataKey="count" fill="url(#sevGradient)" radius={[4, 4, 0, 0]} />
+                  <defs>
+                    <linearGradient id="sevGradient" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="#4df0ff" stopOpacity={0.9} />
+                      <stop offset="100%" stopColor="#00b8d4" stopOpacity={0.5} />
+                    </linearGradient>
+                  </defs>
                 </BarChart>
               </ResponsiveContainer>
             </div>
           ) : (
-            <p className="text-white/60">No severity distribution.</p>
+            <p className="text-white/40">No severity distribution.</p>
           )}
-        </Card>
-      </div>
+        </ChartTableCard>
+      </motion.div>
 
-      <Card>
-        <h3 className="mb-4 text-lg font-semibold text-white">
-          Incident Activity Trend
-        </h3>
-        {timelineChartData.length ? (
-          <div className="h-56">
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={timelineChartData}>
-                <XAxis
-                  dataKey="time"
-                  stroke="#94a3b8"
-                  fontSize={11}
-                  tickFormatter={(v) =>
-                    typeof v === "string" && v.length > 18 ? v.slice(0, 18) + "…" : v
-                  }
-                />
-                <YAxis stroke="#94a3b8" fontSize={12} />
-                <Tooltip
-                  contentStyle={{
-                    background: "#1e293b",
-                    border: "1px solid rgba(255,255,255,0.1)",
-                    borderRadius: "8px",
-                  }}
-                />
-                <Line
-                  type="monotone"
-                  dataKey="count"
-                  stroke="#00C9C9"
-                  strokeWidth={2}
-                  dot={{ fill: "#00C9C9" }}
-                />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
-        ) : (
-          <p className="text-white/60">No timeline chart data.</p>
-        )}
-      </Card>
+      <motion.div variants={fadeUp}>
+        <ChartTableCard
+          title="Incident Activity Trend"
+          columns={[
+            { key: "time", label: "Time" },
+            { key: "count", label: "Count" },
+          ]}
+          data={timelineChartData}
+          csvFilename="incident_activity_trend.csv"
+        >
+          {timelineChartData.length ? (
+            <div className="h-56">
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={timelineChartData}>
+                  <XAxis
+                    dataKey="time"
+                    stroke="#475569"
+                    fontSize={11}
+                    tickFormatter={(v) =>
+                      typeof v === "string" && v.length > 18 ? v.slice(0, 18) + "…" : v
+                    }
+                  />
+                  <YAxis stroke="#475569" fontSize={12} />
+                  <Tooltip
+                    contentStyle={{
+                      background: "rgba(10,15,30,0.95)",
+                      border: "1px solid rgba(0,229,255,0.15)",
+                      borderRadius: "8px",
+                      boxShadow: "0 0 20px rgba(0,229,255,0.1)",
+                    }}
+                    cursor={{ stroke: "rgba(0,229,255,0.15)" }}
+                  />
+                  <defs>
+                    <linearGradient id="lineGradient" x1="0" y1="0" x2="1" y2="0">
+                      <stop offset="0%" stopColor="#00e5ff" />
+                      <stop offset="100%" stopColor="#a855f7" />
+                    </linearGradient>
+                  </defs>
+                  <Line
+                    type="monotone"
+                    dataKey="count"
+                    stroke="url(#lineGradient)"
+                    strokeWidth={2.5}
+                    dot={{ fill: "#00e5ff", strokeWidth: 0, r: 4 }}
+                    activeDot={{ fill: "#00e5ff", strokeWidth: 0, r: 6 }}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+          ) : (
+            <p className="text-white/40">No timeline chart data.</p>
+          )}
+        </ChartTableCard>
+      </motion.div>
     </motion.div>
   );
 }

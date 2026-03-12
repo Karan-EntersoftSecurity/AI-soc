@@ -7,29 +7,39 @@ interface CardProps {
   children: ReactNode;
   className?: string;
   hover?: boolean;
+  glow?: boolean;
 }
 
 export function Card({
   children,
   className = "",
   hover = false,
+  glow = false,
 }: CardProps) {
   const Wrapper = hover ? motion.div : "div";
   const motionProps = hover
     ? {
         initial: { opacity: 0, y: 8 },
         animate: { opacity: 1, y: 0 },
-        whileHover: { scale: 1.01 },
-        transition: { duration: 0.2 },
+        whileHover: { scale: 1.01, y: -2 },
+        transition: { duration: 0.25 },
       }
     : {};
 
   return (
     <Wrapper
-      className={`rounded-xl border border-surface-border bg-surface-card p-4 ${className}`}
+      className={`
+        glow-border relative min-w-0 overflow-hidden rounded-xl
+        border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5
+        backdrop-blur-sm transition-all duration-300
+        hover:border-white/[0.1] hover:bg-white/[0.035]
+        ${glow ? "shadow-glow-sm animate-glow-pulse" : ""}
+        ${className}
+      `}
       {...motionProps}
     >
-      {children}
+      <div className="absolute inset-0 bg-card-gradient pointer-events-none" />
+      <div className="relative">{children}</div>
     </Wrapper>
   );
 }

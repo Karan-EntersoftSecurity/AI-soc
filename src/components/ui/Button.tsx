@@ -16,13 +16,15 @@ interface ButtonProps {
   type?: "button" | "submit" | "reset";
 }
 
-const variants = {
+const variantStyles = {
   primary:
-    "bg-accent text-primary-dark hover:bg-accent-light border border-accent",
-  secondary: "bg-primary-light text-white hover:bg-primary border border-primary",
+    "bg-gradient-to-r from-accent/90 to-accent text-primary-dark font-semibold shadow-glow-sm hover:shadow-glow-md border border-accent/50",
+  secondary:
+    "bg-primary-light text-white hover:bg-primary border border-white/[0.08]",
   outline:
-    "bg-transparent text-accent border border-accent hover:bg-accent/10",
-  ghost: "bg-transparent text-white hover:bg-white/10 border border-surface-border",
+    "bg-transparent text-accent border border-accent/30 hover:bg-accent/10 hover:border-accent/50",
+  ghost:
+    "bg-transparent text-white/70 hover:bg-white/[0.05] hover:text-white border border-transparent",
 };
 
 export function Button({
@@ -39,12 +41,12 @@ export function Button({
     <motion.button
       type={type}
       whileHover={!disabled && !loading ? { scale: 1.02 } : undefined}
-      whileTap={!disabled && !loading ? { scale: 0.98 } : undefined}
+      whileTap={!disabled && !loading ? { scale: 0.97 } : undefined}
       className={`
-        inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2.5
-        text-sm font-medium transition-colors
-        disabled:opacity-50 disabled:cursor-not-allowed
-        ${variants[variant]}
+        inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2
+        text-sm font-medium transition-all duration-300
+        disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none
+        ${variantStyles[variant]}
         ${fullWidth ? "w-full" : ""}
         ${className}
       `}

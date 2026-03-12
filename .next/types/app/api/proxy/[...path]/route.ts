@@ -1,4 +1,4 @@
-// File: C:\Users\EnterSoft\Downloads\ai_soc_poc\frontend\src\app\api\proxy\[...path]\route.ts
+// File: D:\AI_Soc\AI-soc\src\app\api\proxy\[...path]\route.ts
 import * as entry from '../../../../../../src/app/api/proxy/[...path]/route.js'
 import type { NextRequest } from 'next/server.js'
 

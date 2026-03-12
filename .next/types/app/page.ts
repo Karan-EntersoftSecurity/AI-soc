@@ -1,4 +1,4 @@
-// File: C:\Users\EnterSoft\Downloads\ai_soc_poc\frontend\src\app\page.tsx
+// File: D:\AI_Soc\AI-soc\src\app\page.tsx
 import * as entry from '../../../src/app/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

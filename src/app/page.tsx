@@ -42,9 +42,14 @@ export default function DashboardPage() {
   if (incidentPayload == null) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-primary">
-        <div className="flex flex-col items-center gap-4">
-          <div className="h-10 w-10 animate-spin rounded-full border-2 border-accent border-t-transparent" />
-          <p className="text-white/70">Loading incident data...</p>
+        <div className="absolute inset-0 bg-grid-pattern bg-grid-40 opacity-30" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-glow-gradient" />
+        <div className="relative flex flex-col items-center gap-4">
+          <div className="relative">
+            <div className="h-12 w-12 animate-spin rounded-full border-2 border-accent/30 border-t-accent" />
+            <div className="absolute inset-0 animate-pulse-ring rounded-full border border-accent/20" />
+          </div>
+          <p className="text-sm text-white/50">Loading incident data...</p>
         </div>
       </div>
     );
@@ -52,22 +57,23 @@ export default function DashboardPage() {
 
   if (incidentPayload && !incidentPayload.ok && incidentPayload.error) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-primary p-8">
-        <div className="max-w-md rounded-xl border border-red-500/30 bg-red-500/10 p-6 text-center">
-          <h2 className="text-lg font-semibold text-red-400">
+      <div className="flex min-h-screen items-center justify-center bg-primary p-4 sm:p-8">
+        <div className="absolute inset-0 bg-grid-pattern bg-grid-40 opacity-30" />
+        <div className="relative w-full max-w-md rounded-xl border border-severity-critical/20 bg-severity-critical/5 p-6 text-center backdrop-blur-sm">
+          <h2 className="text-lg font-semibold text-severity-critical">
             Could not load incident
           </h2>
-          <p className="mt-2 text-sm text-white/80">
+          <p className="mt-2 text-sm text-white/70">
             {incidentPayload.error}
           </p>
-          <p className="mt-4 text-xs text-white/60">
+          <p className="mt-4 text-xs text-white/40">
             Ensure the backend API is running at{" "}
             {process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000"}
           </p>
           <button
             type="button"
             onClick={() => loadIncident()}
-            className="mt-4 rounded-lg bg-accent px-4 py-2 text-sm font-medium text-primary-dark hover:bg-accent-light"
+            className="mt-4 rounded-lg bg-accent px-4 py-2 text-sm font-medium text-primary-dark shadow-glow-sm transition-shadow hover:shadow-glow-md"
           >
             Retry
           </button>
@@ -78,18 +84,19 @@ export default function DashboardPage() {
 
   if (incidentPayload?.message && !incident) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-primary p-8">
-        <div className="max-w-md rounded-xl border border-surface-border bg-surface-card p-6 text-center">
+      <div className="flex min-h-screen items-center justify-center bg-primary p-4 sm:p-8">
+        <div className="absolute inset-0 bg-grid-pattern bg-grid-40 opacity-30" />
+        <div className="relative w-full max-w-md rounded-xl border border-white/[0.06] bg-white/[0.02] p-6 text-center backdrop-blur-sm">
           <h2 className="text-lg font-semibold text-white">
             No incident data
           </h2>
-          <p className="mt-2 text-sm text-white/70">
+          <p className="mt-2 text-sm text-white/50">
             {incidentPayload.message}
           </p>
           <button
             type="button"
             onClick={() => loadIncident()}
-            className="mt-4 rounded-lg bg-accent px-4 py-2 text-sm font-medium text-primary-dark hover:bg-accent-light"
+            className="mt-4 rounded-lg bg-accent px-4 py-2 text-sm font-medium text-primary-dark shadow-glow-sm transition-shadow hover:shadow-glow-md"
           >
             Refresh
           </button>
@@ -108,7 +115,7 @@ export default function DashboardPage() {
       loading={loading}
     >
       {error && (
-        <div className="mb-4 rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-2 text-sm text-red-300">
+        <div className="mb-4 rounded-lg border border-severity-critical/20 bg-severity-critical/5 px-4 py-2.5 text-sm text-severity-high backdrop-blur-sm">
           {error}
         </div>
       )}

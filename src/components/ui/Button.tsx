@@ -49,7 +49,11 @@ export function Button({
         ${className}
       `}
       disabled={disabled || loading}
-      onClick={onClick}
+      onClick={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        onClick?.();
+      }}
     >
       {loading ? (
         <span className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />

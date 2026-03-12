@@ -4,6 +4,8 @@ import { motion } from "framer-motion";
 import { MetricCard } from "./MetricCard";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
+import { SeverityIcon } from "@/components/ui/SeverityIcon";
+import { Wrench, Clock, List, Bot } from "@/components/icons";
 import { severityColor, normalizeAgentPayload, safeList } from "@/lib/utils";
 import type {
   FinalReport,
@@ -47,7 +49,10 @@ export function IncidentWorkbench({
       animate={{ opacity: 1 }}
       className="space-y-6"
     >
-      <h2 className="text-xl font-semibold text-white">Incident Workbench</h2>
+      <h2 className="flex items-center gap-2 text-xl font-semibold text-white">
+        <Wrench className="h-6 w-6 text-accent" aria-hidden />
+        Incident Workbench
+      </h2>
 
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
         <MetricCard label="Host" value={incident.host ?? "-"} />
@@ -56,8 +61,11 @@ export function IncidentWorkbench({
         <MetricCard
           label="Final Severity"
           value={
-            <span className={severityColor(String(finalSeverity))}>
-              {finalSeverity}
+            <span className="flex items-center gap-1.5">
+              <SeverityIcon severity={String(finalSeverity)} className="h-4 w-4" />
+              <span className={severityColor(String(finalSeverity))}>
+                {finalSeverity}
+              </span>
             </span>
           }
         />
@@ -83,7 +91,10 @@ export function IncidentWorkbench({
 
       <div className="grid gap-6 lg:grid-cols-[1.1fr_1fr]">
         <Card>
-          <h3 className="mb-4 text-lg font-semibold text-white">Timeline</h3>
+          <h3 className="mb-4 flex items-center gap-2 text-lg font-semibold text-white">
+            <Clock className="h-5 w-5 text-accent" aria-hidden />
+            Timeline
+          </h3>
           {timeline.length ? (
             <div className="max-h-96 overflow-auto">
               <table className="w-full text-sm">
@@ -114,7 +125,8 @@ export function IncidentWorkbench({
         </Card>
 
         <Card>
-          <h3 className="mb-4 text-lg font-semibold text-white">
+          <h3 className="mb-4 flex items-center gap-2 text-lg font-semibold text-white">
+            <List className="h-5 w-5 text-accent" aria-hidden />
             Normalized Alerts
           </h3>
           {alerts.length ? (
@@ -161,7 +173,8 @@ export function IncidentWorkbench({
       </div>
 
       <Card>
-        <h3 className="mb-4 text-lg font-semibold text-white">
+        <h3 className="mb-4 flex items-center gap-2 text-lg font-semibold text-white">
+          <Bot className="h-5 w-5 text-accent" aria-hidden />
           Agent Outputs
         </h3>
         {Object.keys(agentResults).length === 0 ? (

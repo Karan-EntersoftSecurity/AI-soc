@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
+import { Fingerprint, FileSearch, BarChart3, User, Clock, List } from "@/components/icons";
 import { topFromAlerts, safeList, safeDict, normalizeAgentPayload } from "@/lib/utils";
 import type { FinalReport, Incident, NormalizedAlert } from "@/types";
 
@@ -42,13 +43,15 @@ export function EvidenceForensics({
       animate={{ opacity: 1 }}
       className="space-y-6"
     >
-      <h2 className="text-xl font-semibold text-white">
+      <h2 className="flex items-center gap-2 text-xl font-semibold text-white">
+        <Fingerprint className="h-6 w-6 text-accent" aria-hidden />
         Evidence & Forensics
       </h2>
 
       <div className="grid gap-6 lg:grid-cols-2">
         <Card>
-          <h3 className="mb-4 text-lg font-semibold text-white">
+          <h3 className="mb-4 flex items-center gap-2 text-lg font-semibold text-white">
+            <Fingerprint className="h-5 w-5 text-accent" aria-hidden />
             Evidence Highlights
           </h3>
           <div className="space-y-4">
@@ -100,7 +103,8 @@ export function EvidenceForensics({
         </Card>
 
         <Card>
-          <h3 className="mb-4 text-lg font-semibold text-white">
+          <h3 className="mb-4 flex items-center gap-2 text-lg font-semibold text-white">
+            <FileSearch className="h-5 w-5 text-accent" aria-hidden />
             Recommended Evidence Collection
           </h3>
           {evidenceToCollect.length ? (
@@ -119,7 +123,8 @@ export function EvidenceForensics({
 
       <div className="grid gap-6 lg:grid-cols-2">
         <Card>
-          <h3 className="mb-4 text-lg font-semibold text-white">
+          <h3 className="mb-4 flex items-center gap-2 text-lg font-semibold text-white">
+            <BarChart3 className="h-5 w-5 text-accent" aria-hidden />
             Rule Frequency
           </h3>
           {rulesData.length ? (
@@ -152,7 +157,8 @@ export function EvidenceForensics({
         </Card>
 
         <Card>
-          <h3 className="mb-4 text-lg font-semibold text-white">
+          <h3 className="mb-4 flex items-center gap-2 text-lg font-semibold text-white">
+            <User className="h-5 w-5 text-accent" aria-hidden />
             User / Process Review
           </h3>
           {usersData.length ? (
@@ -183,7 +189,8 @@ export function EvidenceForensics({
       </div>
 
       <Card>
-        <h3 className="mb-4 text-lg font-semibold text-white">
+        <h3 className="mb-4 flex items-center gap-2 text-lg font-semibold text-white">
+          <Clock className="h-5 w-5 text-accent" aria-hidden />
           Key Timestamps
         </h3>
         {timestamps.length ? (
@@ -206,7 +213,8 @@ export function EvidenceForensics({
       </Card>
 
       <Card>
-        <h3 className="mb-4 text-lg font-semibold text-white">
+        <h3 className="mb-4 flex items-center gap-2 text-lg font-semibold text-white">
+          <List className="h-5 w-5 text-accent" aria-hidden />
           Full Alert Evidence Table
         </h3>
         {alerts.length ? (

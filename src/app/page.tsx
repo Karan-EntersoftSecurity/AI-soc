@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { DashboardLayout } from "@/components/layout/DashboardLayout";
+import { AlertCircle, Info, Loader2 } from "@/components/icons";
 import { ExecutiveOverview } from "@/components/dashboard/ExecutiveOverview";
 import { IncidentWorkbench } from "@/components/dashboard/IncidentWorkbench";
 import { AutonomousSOC } from "@/components/dashboard/AutonomousSOC";
@@ -43,7 +44,7 @@ export default function DashboardPage() {
     return (
       <div className="flex min-h-screen items-center justify-center bg-primary">
         <div className="flex flex-col items-center gap-4">
-          <div className="h-10 w-10 animate-spin rounded-full border-2 border-accent border-t-transparent" />
+          <Loader2 className="h-10 w-10 animate-spin text-accent" aria-hidden />
           <p className="text-white/70">Loading incident data...</p>
         </div>
       </div>
@@ -54,7 +55,8 @@ export default function DashboardPage() {
     return (
       <div className="flex min-h-screen items-center justify-center bg-primary p-8">
         <div className="max-w-md rounded-xl border border-red-500/30 bg-red-500/10 p-6 text-center">
-          <h2 className="text-lg font-semibold text-red-400">
+          <AlertCircle className="mx-auto h-12 w-12 text-red-400" aria-hidden />
+          <h2 className="mt-2 text-lg font-semibold text-red-400">
             Could not load incident
           </h2>
           <p className="mt-2 text-sm text-white/80">
@@ -80,7 +82,8 @@ export default function DashboardPage() {
     return (
       <div className="flex min-h-screen items-center justify-center bg-primary p-8">
         <div className="max-w-md rounded-xl border border-surface-border bg-surface-card p-6 text-center">
-          <h2 className="text-lg font-semibold text-white">
+          <Info className="mx-auto h-12 w-12 text-accent" aria-hidden />
+          <h2 className="mt-2 text-lg font-semibold text-white">
             No incident data
           </h2>
           <p className="mt-2 text-sm text-white/70">
@@ -108,7 +111,8 @@ export default function DashboardPage() {
       loading={loading}
     >
       {error && (
-        <div className="mb-4 rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-2 text-sm text-red-300">
+        <div className="mb-4 flex items-center gap-2 rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-2 text-sm text-red-300">
+          <AlertCircle className="h-4 w-4 shrink-0" aria-hidden />
           {error}
         </div>
       )}

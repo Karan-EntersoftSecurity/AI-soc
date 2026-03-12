@@ -3,6 +3,8 @@
 import { motion } from "framer-motion";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
+import { SeverityIcon } from "@/components/ui/SeverityIcon";
+import { Share2, FileCheck, Download, ListTodo } from "@/components/icons";
 import { severityColor } from "@/lib/utils";
 import type { FinalReport } from "@/types";
 import { safeList, safeDict } from "@/lib/utils";
@@ -19,7 +21,8 @@ export function L2Handoff({ finalReport }: L2HandoffProps) {
         animate={{ opacity: 1 }}
         className="space-y-6"
       >
-        <h2 className="text-xl font-semibold text-white">
+        <h2 className="flex items-center gap-2 text-xl font-semibold text-white">
+          <Share2 className="h-6 w-6 text-accent" aria-hidden />
           L2 Analyst Handoff
         </h2>
         <p className="text-white/60">
@@ -50,7 +53,8 @@ export function L2Handoff({ finalReport }: L2HandoffProps) {
       animate={{ opacity: 1 }}
       className="space-y-6"
     >
-      <h2 className="text-xl font-semibold text-white">
+      <h2 className="flex items-center gap-2 text-xl font-semibold text-white">
+        <Share2 className="h-6 w-6 text-accent" aria-hidden />
         L2 Analyst Handoff
       </h2>
 
@@ -63,8 +67,11 @@ export function L2Handoff({ finalReport }: L2HandoffProps) {
         </Card>
         <Card>
           <p className="text-xs text-white/60">Severity</p>
-          <p className={severityColor(finalReport.severity)}>
-            {finalReport.severity}
+          <p className="flex items-center gap-1.5 font-medium">
+            <SeverityIcon severity={finalReport.severity} className="h-4 w-4" />
+            <span className={severityColor(finalReport.severity)}>
+              {finalReport.severity}
+            </span>
           </p>
         </Card>
         <Card>
@@ -82,7 +89,8 @@ export function L2Handoff({ finalReport }: L2HandoffProps) {
       </div>
 
       <Card>
-        <h3 className="mb-4 text-lg font-semibold text-white">
+        <h3 className="mb-4 flex items-center gap-2 text-lg font-semibold text-white">
+          <FileCheck className="h-5 w-5 text-accent" aria-hidden />
           Handoff Summary
         </h3>
         <div className="space-y-2 text-sm text-white/90">
@@ -126,7 +134,8 @@ export function L2Handoff({ finalReport }: L2HandoffProps) {
 
       <div className="grid gap-6 lg:grid-cols-2">
         <Card>
-          <h3 className="mb-4 text-lg font-semibold text-white">
+          <h3 className="mb-4 flex items-center gap-2 text-lg font-semibold text-white">
+            <ListTodo className="h-5 w-5 text-accent" aria-hidden />
             Recommended L2 Actions
           </h3>
           {actions.length ? (
@@ -141,7 +150,8 @@ export function L2Handoff({ finalReport }: L2HandoffProps) {
         </Card>
 
         <Card>
-          <h3 className="mb-4 text-lg font-semibold text-white">
+          <h3 className="mb-4 flex items-center gap-2 text-lg font-semibold text-white">
+            <FileCheck className="h-5 w-5 text-accent" aria-hidden />
             Triage Trace
           </h3>
           {Object.keys(triageTrace).length ? (
@@ -167,11 +177,13 @@ export function L2Handoff({ finalReport }: L2HandoffProps) {
       </div>
 
       <Card>
-        <h3 className="mb-4 text-lg font-semibold text-white">
+        <h3 className="mb-4 flex items-center gap-2 text-lg font-semibold text-white">
+          <Download className="h-5 w-5 text-accent" aria-hidden />
           Exportable JSON
         </h3>
         <div className="flex flex-wrap items-center gap-4">
           <Button variant="primary" onClick={handleDownload}>
+            <Download className="h-4 w-4 shrink-0" aria-hidden />
             Download L2 Incident Report JSON
           </Button>
         </div>

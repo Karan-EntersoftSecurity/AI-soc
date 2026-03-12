@@ -4,6 +4,8 @@ import { motion } from "framer-motion";
 import { MetricCard } from "./MetricCard";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
+import { SeverityIcon } from "@/components/ui/SeverityIcon";
+import { Zap, FileJson, CheckCircle } from "@/components/icons";
 import { severityColor } from "@/lib/utils";
 import type { FinalReport } from "@/types";
 
@@ -34,7 +36,10 @@ export function AutonomousSOC({
       animate={{ opacity: 1 }}
       className="space-y-6"
     >
-      <h2 className="text-xl font-semibold text-white">Autonomous AI SOC</h2>
+      <h2 className="flex items-center gap-2 text-xl font-semibold text-white">
+        <Zap className="h-6 w-6 text-accent" aria-hidden />
+        Autonomous AI SOC
+      </h2>
 
       <Card>
         <p className="text-white/90">
@@ -93,7 +98,8 @@ export function AutonomousSOC({
       )}
 
       <div>
-        <h3 className="mb-3 text-lg font-medium text-white">
+        <h3 className="mb-3 flex items-center gap-2 text-lg font-medium text-white">
+          <CheckCircle className="h-5 w-5 text-accent" aria-hidden />
           Agent Execution Trace
         </h3>
         {Object.keys(agentResults).length === 0 ? (
@@ -118,7 +124,8 @@ export function AutonomousSOC({
       </div>
 
       <Card>
-        <h3 className="mb-4 text-lg font-semibold text-white">
+        <h3 className="mb-4 flex items-center gap-2 text-lg font-semibold text-white">
+          <FileJson className="h-5 w-5 text-accent" aria-hidden />
           Final Report
         </h3>
         {finalReport ? (

@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 import { Header } from "./Header";
 import { Sidebar } from "./Sidebar";
 import type { DashboardPage } from "@/types";
@@ -24,11 +24,18 @@ export function DashboardLayout({
   onRunAgent,
   loading,
 }: DashboardLayoutProps) {
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+
   return (
     <div className="flex min-h-screen flex-col bg-primary">
-      <Header />
+      <Header
+        sidebarOpen={sidebarOpen}
+        onToggleSidebar={() => setSidebarOpen((o) => !o)}
+      />
       <div className="flex flex-1 overflow-hidden">
         <Sidebar
+          open={sidebarOpen}
+          onClose={() => setSidebarOpen(false)}
           page={page}
           onPageChange={onPageChange}
           onRefresh={onRefresh}

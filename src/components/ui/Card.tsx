@@ -9,11 +9,7 @@ interface CardProps {
   hover?: boolean;
 }
 
-export function Card({
-  children,
-  className = "",
-  hover = false,
-}: CardProps) {
+export function Card({ children, className = "", hover = false }: CardProps) {
   const Wrapper = hover ? motion.div : "div";
   const motionProps = hover
     ? {

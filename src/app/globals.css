@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary: #1a2b5b;
+  --primary-light: #2c42b0;
+  --accent: #00c9c9;
+  --accent-light: #4dcaf0;
+}
+
+body {
+  @apply bg-primary text-white antialiased;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-primary-dark/50;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply rounded-full bg-white/20;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-white/30;
+}

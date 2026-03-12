@@ -25,6 +25,7 @@ import { MetricCard } from "./MetricCard";
 import { Card } from "@/components/ui/Card";
 import { ChartTableCard } from "@/components/ui/ChartTableCard";
 import { Badge } from "@/components/ui/Badge";
+import { SeverityIcon } from "@/components/ui/SeverityIcon";
 import { severityColor, topFromAlerts, safeList, safeDict } from "@/lib/utils";
 import type {
   FinalReport,
@@ -67,9 +68,10 @@ export function ExecutiveOverview({
     },
     { "High (12+)": 0, "Medium (8-11)": 0, "Low (<8)": 0 } as Record<string, number>
   );
-  const severityData = Object.entries(severityBuckets).map(([bucket, count]) => ({
+  const SEVERITY_ORDER = ["High (12+)", "Medium (8-11)", "Low (<8)"];
+  const severityData = SEVERITY_ORDER.map((bucket) => ({
     bucket,
-    count,
+    count: severityBuckets[bucket] ?? 0,
   }));
   const timelineCounts = timeline.reduce(
     (acc, t) => {

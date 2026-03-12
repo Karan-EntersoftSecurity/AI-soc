@@ -24,14 +24,14 @@ import type { LucideIcon } from "lucide-react";
 type AnimatedIcon = ComponentType<{ className?: string; animate?: boolean }>;
 
 interface SidebarProps {
+  open: boolean;
+  onClose: () => void;
   page: DashboardPage;
   onPageChange: (page: DashboardPage) => void;
   onRefresh: () => void;
   onRunAutonomous: () => void;
   onRunAgent: (name: string) => void;
   loading: boolean;
-  open?: boolean;
-  onClose?: () => void;
 }
 
 const PAGES: { id: DashboardPage; label: string; icon: AnimatedIcon }[] = [
@@ -101,14 +101,14 @@ function NavItems({
 }
 
 export function Sidebar({
+  open,
+  onClose,
   page,
   onPageChange,
   onRefresh,
   onRunAutonomous,
   onRunAgent,
   loading,
-  open = false,
-  onClose,
 }: SidebarProps) {
   useEffect(() => {
     if (open) document.body.style.overflow = "hidden";

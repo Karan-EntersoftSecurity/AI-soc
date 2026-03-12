@@ -16,6 +16,7 @@ import { MetricCard } from "./MetricCard";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { TriageTraceRenderer } from "./TriageTraceRenderer";
+import { SeverityIcon } from "@/components/ui/SeverityIcon";
 import { severityColor, normalizeAgentPayload, safeList } from "@/lib/utils";
 import type {
   FinalReport,
@@ -84,8 +85,11 @@ export function IncidentWorkbench({
         <MetricCard
           label="Final Severity"
           value={
-            <span className={severityColor(String(finalSeverity))}>
-              {finalSeverity}
+            <span className="flex items-center gap-1.5">
+              <SeverityIcon severity={String(finalSeverity)} className="h-4 w-4" />
+              <span className={severityColor(String(finalSeverity))}>
+                {finalSeverity}
+              </span>
             </span>
           }
           icon={ShieldAlert}

@@ -36,14 +36,14 @@ export function DashboardLayout({
       <Header onMenuClick={() => setSidebarOpen(true)} />
       <div className="flex flex-1 overflow-hidden">
         <Sidebar
+          open={sidebarOpen}
+          onClose={() => setSidebarOpen(false)}
           page={page}
           onPageChange={handlePageChange}
           onRefresh={onRefresh}
           onRunAutonomous={onRunAutonomous}
           onRunAgent={onRunAgent}
           loading={loading}
-          open={sidebarOpen}
-          onClose={() => setSidebarOpen(false)}
         />
         <main className="relative flex-1 overflow-auto min-w-0">
           <div className="absolute inset-0 bg-grid-pattern bg-grid-40 pointer-events-none opacity-40" />

@@ -9,31 +9,50 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        /* Main palette */
+        page: "#F5F9FF",
+        sidebar: "#F0F6FF",
+        card: "#FFFFFF",
+        "border-soft": "#E2E8F0",
+        "text-primary": "#1F2A44",
+        "text-secondary": "#6B7280",
+        "hover-highlight": "#DCEBFF",
+        "soft-ui-blue": "#E8F2FF",
         primary: {
-          DEFAULT: "#0a0f1e",
-          light: "#1a2444",
-          dark: "#060a14",
+          DEFAULT: "#1E6BD6",
+          light: "#E8F2FF",
+          dark: "#1D4ED8",
         },
         accent: {
-          DEFAULT: "#00e5ff",
-          light: "#4df0ff",
-          dark: "#00b8d4",
+          DEFAULT: "#1E6BD6",
+          light: "#E8F2FF",
+          dark: "#1D4ED8",
         },
+        /* Buttons & status */
+        "btn-primary": "#2563EB",
+        "btn-hover": "#1D4ED8",
+        success: "#22C55E",
+        warning: "#F59E0B",
+        danger: "#EF4444",
+        /* Charts */
+        "chart-primary": "#3B82F6",
+        "chart-secondary": "#60A5FA",
+        "chart-accent": "#93C5FD",
         surface: {
-          card: "rgba(255,255,255,0.03)",
-          border: "rgba(255,255,255,0.08)",
+          card: "#FFFFFF",
+          border: "#E2E8F0",
         },
         severity: {
-          critical: "#ff3b3b",
-          high: "#ff6b6b",
-          medium: "#ffd166",
-          low: "#06d6a0",
+          critical: "#EF4444",
+          high: "#F59E0B",
+          medium: "#EAB308",
+          low: "#22C55E",
         },
         cyber: {
-          blue: "#00e5ff",
-          purple: "#a855f7",
-          pink: "#ec4899",
-          green: "#00ff88",
+          blue: "#1E6BD6",
+          purple: "#7C3AED",
+          pink: "#EC4899",
+          green: "#22C55E",
         },
       },
       fontFamily: {
@@ -65,12 +84,12 @@ const config: Config = {
           "100%": { opacity: "1", transform: "translateX(0)" },
         },
         glowPulse: {
-          "0%, 100%": { boxShadow: "0 0 8px rgba(0,229,255,0.15)" },
-          "50%": { boxShadow: "0 0 20px rgba(0,229,255,0.3)" },
+          "0%, 100%": { boxShadow: "0 0 8px rgba(30,107,214,0.12)" },
+          "50%": { boxShadow: "0 0 20px rgba(30,107,214,0.2)" },
         },
         borderGlow: {
-          "0%, 100%": { borderColor: "rgba(0,229,255,0.15)" },
-          "50%": { borderColor: "rgba(0,229,255,0.4)" },
+          "0%, 100%": { borderColor: "rgba(30,107,214,0.2)" },
+          "50%": { borderColor: "rgba(30,107,214,0.4)" },
         },
         scanLine: {
           "0%": { transform: "translateY(-100%)" },
@@ -95,21 +114,21 @@ const config: Config = {
       },
       backgroundImage: {
         "grid-pattern":
-          "linear-gradient(rgba(0,229,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,229,255,0.03) 1px, transparent 1px)",
+          "linear-gradient(rgba(30,107,214,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(30,107,214,0.04) 1px, transparent 1px)",
         "glow-gradient":
-          "radial-gradient(ellipse at 50% 0%, rgba(0,229,255,0.12) 0%, transparent 60%)",
+          "radial-gradient(ellipse at 50% 0%, rgba(30,107,214,0.06) 0%, transparent 60%)",
         "card-gradient":
-          "linear-gradient(135deg, rgba(0,229,255,0.05) 0%, rgba(168,85,247,0.03) 50%, transparent 100%)",
+          "linear-gradient(135deg, rgba(30,107,214,0.02) 0%, transparent 100%)",
       },
       backgroundSize: {
         "grid-40": "40px 40px",
       },
       boxShadow: {
-        "glow-sm": "0 0 10px rgba(0,229,255,0.15)",
-        "glow-md": "0 0 20px rgba(0,229,255,0.2)",
-        "glow-lg": "0 0 40px rgba(0,229,255,0.25)",
-        "glow-accent": "0 0 15px rgba(0,229,255,0.4)",
-        "inner-glow": "inset 0 1px 0 rgba(0,229,255,0.1)",
+        "glow-sm": "0 0 10px rgba(30,107,214,0.1)",
+        "glow-md": "0 0 20px rgba(30,107,214,0.15)",
+        "glow-lg": "0 0 40px rgba(30,107,214,0.2)",
+        "glow-accent": "0 0 15px rgba(30,107,214,0.25)",
+        "inner-glow": "inset 0 1px 0 rgba(255,255,255,0.8)",
       },
     },
   },

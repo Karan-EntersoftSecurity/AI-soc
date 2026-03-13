@@ -30,9 +30,9 @@ export function Card({
     <Wrapper
       className={`
         glow-border relative min-w-0 overflow-hidden rounded-xl
-        border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5
+        border border-border-soft bg-card p-4 sm:p-5
         backdrop-blur-sm transition-all duration-300
-        hover:border-white/[0.1] hover:bg-white/[0.035]
+        hover:border-primary/20 hover:shadow-glow-sm
         ${glow ? "shadow-glow-sm animate-glow-pulse" : ""}
         ${className}
       `}

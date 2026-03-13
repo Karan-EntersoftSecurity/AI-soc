@@ -129,49 +129,49 @@ export function ExecutiveOverview({
       <motion.div variants={fadeUp} className="grid gap-6 lg:grid-cols-[1.3fr_1fr]">
         <Card>
           <div className="mb-4 flex items-center gap-2">
-            <Shield className="h-5 w-5 text-accent/60" />
-            <h3 className="text-lg font-semibold text-white">
+            <Shield className="h-5 w-5 text-primary/70" />
+            <h3 className="text-lg font-semibold text-text-primary">
               Executive Summary
             </h3>
           </div>
           {finalReport ? (
-            <div className="space-y-2.5 text-sm text-white/80">
+            <div className="space-y-2.5 text-sm text-text-primary">
               <p>
-                <span className="font-medium text-white/50">Incident ID:</span>{" "}
-                <span className="text-white">{finalReport.incident_id}</span>
+                <span className="font-medium text-text-secondary">Incident ID:</span>{" "}
+                <span className="text-text-primary">{finalReport.incident_id}</span>
               </p>
               <p>
-                <span className="font-medium text-white/50">Severity:</span>{" "}
+                <span className="font-medium text-text-secondary">Severity:</span>{" "}
                 <span className={severityColor(finalReport.severity)}>
                   {finalReport.severity}
                 </span>
               </p>
               <p>
-                <span className="font-medium text-white/50">Verdict:</span>{" "}
-                <span className="text-white">{finalReport.final_verdict}</span>
+                <span className="font-medium text-text-secondary">Verdict:</span>{" "}
+                <span className="text-text-primary">{finalReport.final_verdict}</span>
               </p>
               <p>
-                <span className="font-medium text-white/50">First Seen:</span>{" "}
+                <span className="font-medium text-text-secondary">First Seen:</span>{" "}
                 {String(firstSeen)}
               </p>
               <p>
-                <span className="font-medium text-white/50">Last Seen:</span>{" "}
+                <span className="font-medium text-text-secondary">Last Seen:</span>{" "}
                 {String(lastSeen)}
               </p>
-              <div className="mt-4 rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 text-white/80">
+              <div className="mt-4 rounded-lg border border-border-soft bg-soft-ui-blue p-3 text-text-primary">
                 {finalReport.executive_summary}
               </div>
               <p className="mt-2">
-                <span className="font-medium text-white/50">
+                <span className="font-medium text-text-secondary">
                   Recommended Next Step:
                 </span>{" "}
-                <span className="text-accent/80">
+                <span className="text-primary">
                   {finalReport.recommended_next_step ?? "-"}
                 </span>
               </p>
             </div>
           ) : (
-            <p className="text-white/40">
+            <p className="text-text-secondary">
               Run Autonomous Incident Simulation to generate executive summary.
             </p>
           )}
@@ -179,24 +179,24 @@ export function ExecutiveOverview({
 
         <Card>
           <div className="mb-4 flex items-center gap-2">
-            <Cpu className="h-5 w-5 text-accent/60" />
-            <h3 className="text-lg font-semibold text-white">
+            <Cpu className="h-5 w-5 text-primary/70" />
+            <h3 className="text-lg font-semibold text-text-primary">
               Top Risk Signals
             </h3>
           </div>
           <div className="space-y-4">
             <div>
-              <p className="mb-2 text-[11px] font-medium uppercase tracking-wider text-white/40">
+              <p className="mb-2 text-[11px] font-medium uppercase tracking-wider text-text-secondary">
                 Top Rules
               </p>
               <div className="flex flex-wrap gap-2">
                 {topRules.length
                   ? topRules.map((r) => <Badge key={String(r)} variant="accent">{String(r)}</Badge>)
-                  : <span className="text-white/30">-</span>}
+                  : <span className="text-text-secondary">-</span>}
               </div>
             </div>
             <div>
-              <p className="mb-2 text-[11px] font-medium uppercase tracking-wider text-white/40">
+              <p className="mb-2 text-[11px] font-medium uppercase tracking-wider text-text-secondary">
                 Top Processes
               </p>
               <div className="flex flex-wrap gap-2">
@@ -204,11 +204,11 @@ export function ExecutiveOverview({
                   ? topProcesses.map((p) => (
                       <Badge key={String(p)}>{String(p)}</Badge>
                     ))
-                  : <span className="text-white/30">-</span>}
+                  : <span className="text-text-secondary">-</span>}
               </div>
             </div>
             <div>
-              <p className="mb-2 text-[11px] font-medium uppercase tracking-wider text-white/40">
+              <p className="mb-2 text-[11px] font-medium uppercase tracking-wider text-text-secondary">
                 MITRE Mapping
               </p>
               <div className="flex flex-wrap gap-2">
@@ -216,7 +216,7 @@ export function ExecutiveOverview({
                   ? mitreMapping.map((m) => (
                       <Badge key={String(m)} variant="warning">{String(m)}</Badge>
                     ))
-                  : <span className="text-white/30">-</span>}
+                  : <span className="text-text-secondary">-</span>}
               </div>
             </div>
           </div>
@@ -237,12 +237,12 @@ export function ExecutiveOverview({
             <div className="h-64">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={processesData} layout="vertical" margin={{ left: 20 }}>
-                  <XAxis type="number" stroke="#475569" fontSize={12} />
+                  <XAxis type="number" stroke="#6B7280" fontSize={12} />
                   <YAxis
                     type="category"
                     dataKey="name"
                     width={120}
-                    stroke="#475569"
+                    stroke="#6B7280"
                     fontSize={11}
                     tickFormatter={(v) =>
                       String(v).length > 20 ? String(v).slice(0, 20) + "…" : v
@@ -250,27 +250,27 @@ export function ExecutiveOverview({
                   />
                   <Tooltip
                     contentStyle={{
-                      background: "rgba(10,15,30,0.95)",
-                      border: "1px solid rgba(0,229,255,0.15)",
+                      background: "#FFFFFF",
+                      border: "1px solid #E2E8F0",
                       borderRadius: "8px",
-                      boxShadow: "0 0 20px rgba(0,229,255,0.1)",
+                      boxShadow: "0 4px 12px rgba(31,42,68,0.08)",
                     }}
-                    labelStyle={{ color: "#e2e8f0" }}
-                    cursor={{ fill: "rgba(0,229,255,0.06)" }}
+                    labelStyle={{ color: "#1F2A44" }}
+                    cursor={{ fill: "rgba(30,107,214,0.06)" }}
                   />
                   <Bar dataKey="count" fill="url(#barGradient)" radius={[0, 4, 4, 0]}>
                   </Bar>
                   <defs>
                     <linearGradient id="barGradient" x1="0" y1="0" x2="1" y2="0">
-                      <stop offset="0%" stopColor="#00e5ff" stopOpacity={0.8} />
-                      <stop offset="100%" stopColor="#a855f7" stopOpacity={0.6} />
+                      <stop offset="0%" stopColor="#3B82F6" stopOpacity={0.9} />
+                      <stop offset="100%" stopColor="#93C5FD" stopOpacity={0.7} />
                     </linearGradient>
                   </defs>
                 </BarChart>
               </ResponsiveContainer>
             </div>
           ) : (
-            <p className="text-white/40">No process data.</p>
+            <p className="text-text-secondary">No process data.</p>
           )}
         </ChartTableCard>
         <ChartTableCard
@@ -286,29 +286,29 @@ export function ExecutiveOverview({
             <div className="h-64">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={severityData}>
-                  <XAxis dataKey="bucket" stroke="#475569" fontSize={12} />
-                  <YAxis stroke="#475569" fontSize={12} />
+                  <XAxis dataKey="bucket" stroke="#6B7280" fontSize={12} />
+                  <YAxis stroke="#6B7280" fontSize={12} />
                   <Tooltip
                     contentStyle={{
-                      background: "rgba(10,15,30,0.95)",
-                      border: "1px solid rgba(0,229,255,0.15)",
+                      background: "#FFFFFF",
+                      border: "1px solid #E2E8F0",
                       borderRadius: "8px",
-                      boxShadow: "0 0 20px rgba(0,229,255,0.1)",
+                      boxShadow: "0 4px 12px rgba(31,42,68,0.08)",
                     }}
-                    cursor={{ fill: "rgba(0,229,255,0.06)" }}
+                    cursor={{ fill: "rgba(30,107,214,0.06)" }}
                   />
                   <Bar dataKey="count" fill="url(#sevGradient)" radius={[4, 4, 0, 0]} />
                   <defs>
                     <linearGradient id="sevGradient" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#4df0ff" stopOpacity={0.9} />
-                      <stop offset="100%" stopColor="#00b8d4" stopOpacity={0.5} />
+                      <stop offset="0%" stopColor="#60A5FA" stopOpacity={0.9} />
+                      <stop offset="100%" stopColor="#3B82F6" stopOpacity={0.6} />
                     </linearGradient>
                   </defs>
                 </BarChart>
               </ResponsiveContainer>
             </div>
           ) : (
-            <p className="text-white/40">No severity distribution.</p>
+            <p className="text-text-secondary">No severity distribution.</p>
           )}
         </ChartTableCard>
       </motion.div>
@@ -329,26 +329,26 @@ export function ExecutiveOverview({
                 <LineChart data={timelineChartData}>
                   <XAxis
                     dataKey="time"
-                    stroke="#475569"
+                    stroke="#6B7280"
                     fontSize={11}
                     tickFormatter={(v) =>
                       typeof v === "string" && v.length > 18 ? v.slice(0, 18) + "…" : v
                     }
                   />
-                  <YAxis stroke="#475569" fontSize={12} />
+                  <YAxis stroke="#6B7280" fontSize={12} />
                   <Tooltip
                     contentStyle={{
-                      background: "rgba(10,15,30,0.95)",
-                      border: "1px solid rgba(0,229,255,0.15)",
+                      background: "#FFFFFF",
+                      border: "1px solid #E2E8F0",
                       borderRadius: "8px",
-                      boxShadow: "0 0 20px rgba(0,229,255,0.1)",
+                      boxShadow: "0 4px 12px rgba(31,42,68,0.08)",
                     }}
-                    cursor={{ stroke: "rgba(0,229,255,0.15)" }}
+                    cursor={{ stroke: "rgba(30,107,214,0.2)" }}
                   />
                   <defs>
                     <linearGradient id="lineGradient" x1="0" y1="0" x2="1" y2="0">
-                      <stop offset="0%" stopColor="#00e5ff" />
-                      <stop offset="100%" stopColor="#a855f7" />
+                      <stop offset="0%" stopColor="#3B82F6" />
+                      <stop offset="100%" stopColor="#93C5FD" />
                     </linearGradient>
                   </defs>
                   <Line
@@ -356,14 +356,14 @@ export function ExecutiveOverview({
                     dataKey="count"
                     stroke="url(#lineGradient)"
                     strokeWidth={2.5}
-                    dot={{ fill: "#00e5ff", strokeWidth: 0, r: 4 }}
-                    activeDot={{ fill: "#00e5ff", strokeWidth: 0, r: 6 }}
+                    dot={{ fill: "#3B82F6", strokeWidth: 0, r: 4 }}
+                    activeDot={{ fill: "#3B82F6", strokeWidth: 0, r: 6 }}
                   />
                 </LineChart>
               </ResponsiveContainer>
             </div>
           ) : (
-            <p className="text-white/40">No timeline chart data.</p>
+            <p className="text-text-secondary">No timeline chart data.</p>
           )}
         </ChartTableCard>
       </motion.div>

@@ -65,10 +65,10 @@ export function EvidenceForensics({
       className="space-y-6"
     >
       <motion.div variants={fadeUp} className="flex items-center gap-3">
-        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-accent/10">
-          <Search className="h-4 w-4 text-accent" />
+        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-soft-ui-blue">
+          <Search className="h-4 w-4 text-primary" />
         </div>
-        <h2 className="text-xl font-semibold text-white">
+        <h2 className="text-xl font-semibold text-text-primary">
           Evidence & Forensics
         </h2>
       </motion.div>
@@ -76,25 +76,25 @@ export function EvidenceForensics({
       <motion.div variants={fadeUp} className="grid gap-6 lg:grid-cols-2">
         <Card>
           <div className="mb-4 flex items-center gap-2">
-            <Target className="h-4 w-4 text-accent/60" />
-            <h3 className="text-lg font-semibold text-white">
+            <Target className="h-4 w-4 text-primary/70" />
+            <h3 className="text-lg font-semibold text-text-primary">
               Evidence Highlights
             </h3>
           </div>
           <div className="space-y-4">
             <div>
-              <p className="mb-2 text-[11px] font-medium uppercase tracking-wider text-white/40">
+              <p className="mb-2 text-[11px] font-medium uppercase tracking-wider text-text-secondary">
                 <Users className="mb-0.5 mr-1 inline h-3 w-3" />
                 Users Involved
               </p>
               <div className="flex flex-wrap gap-2">
                 {users.length
                   ? users.map((u) => <Badge key={String(u)}>{String(u)}</Badge>)
-                  : <span className="text-white/30">-</span>}
+                  : <span className="text-text-secondary">-</span>}
               </div>
             </div>
             <div>
-              <p className="mb-2 text-[11px] font-medium uppercase tracking-wider text-white/40">
+              <p className="mb-2 text-[11px] font-medium uppercase tracking-wider text-text-secondary">
                 <Shield className="mb-0.5 mr-1 inline h-3 w-3" />
                 MITRE Techniques
               </p>
@@ -103,21 +103,21 @@ export function EvidenceForensics({
                   ? mitreMapping.map((m) => (
                       <Badge key={String(m)} variant="warning">{String(m)}</Badge>
                     ))
-                  : <span className="text-white/30">-</span>}
+                  : <span className="text-text-secondary">-</span>}
               </div>
             </div>
             <div>
-              <p className="mb-2 text-[11px] font-medium uppercase tracking-wider text-white/40">
+              <p className="mb-2 text-[11px] font-medium uppercase tracking-wider text-text-secondary">
                 Top Rules
               </p>
               <div className="flex flex-wrap gap-2">
                 {topRules.length
                   ? topRules.map((r) => <Badge key={String(r)} variant="accent">{String(r)}</Badge>)
-                  : <span className="text-white/30">-</span>}
+                  : <span className="text-text-secondary">-</span>}
               </div>
             </div>
             <div>
-              <p className="mb-2 text-[11px] font-medium uppercase tracking-wider text-white/40">
+              <p className="mb-2 text-[11px] font-medium uppercase tracking-wider text-text-secondary">
                 <Cpu className="mb-0.5 mr-1 inline h-3 w-3" />
                 Top Processes
               </p>
@@ -126,7 +126,7 @@ export function EvidenceForensics({
                   ? topProcesses.map((p) => (
                       <Badge key={String(p)}>{String(p)}</Badge>
                     ))
-                  : <span className="text-white/30">-</span>}
+                  : <span className="text-text-secondary">-</span>}
               </div>
             </div>
           </div>
@@ -134,19 +134,19 @@ export function EvidenceForensics({
 
         <Card>
           <div className="mb-4 flex items-center gap-2">
-            <ClipboardList className="h-4 w-4 text-accent/60" />
+            <ClipboardList className="h-4 w-4 text-primary/70" />
             <h3 className="text-lg font-semibold text-white">
               Recommended Evidence Collection
             </h3>
           </div>
           {evidenceToCollect.length ? (
-            <ol className="list-decimal space-y-2 pl-5 text-sm text-white/70">
+            <ol className="list-decimal space-y-2 pl-5 text-sm text-text-primary">
               {evidenceToCollect.map((item, i) => (
-                <li key={i} className="transition-colors hover:text-white/90">{String(item)}</li>
+                <li key={i} className="transition-colors hover:text-primary">{String(item)}</li>
               ))}
             </ol>
           ) : (
-            <p className="text-white/40">
+            <p className="text-text-secondary">
               No investigation evidence collection guidance yet.
             </p>
           )}
@@ -169,13 +169,13 @@ export function EvidenceForensics({
                 <BarChart data={rulesData}>
                   <XAxis
                     dataKey="name"
-                    stroke="#475569"
+                    stroke="#6B7280"
                     fontSize={11}
                     tickFormatter={(v) =>
                       String(v).length > 25 ? String(v).slice(0, 25) + "…" : v
                     }
                   />
-                  <YAxis stroke="#475569" fontSize={12} />
+                  <YAxis stroke="#6B7280" fontSize={12} />
                   <Tooltip
                     contentStyle={{
                       background: "rgba(10,15,30,0.95)",
@@ -188,15 +188,15 @@ export function EvidenceForensics({
                   <Bar dataKey="count" fill="url(#ruleGrad)" radius={[4, 4, 0, 0]} />
                   <defs>
                     <linearGradient id="ruleGrad" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#00e5ff" stopOpacity={0.9} />
-                      <stop offset="100%" stopColor="#00e5ff" stopOpacity={0.3} />
+                      <stop offset="0%" stopColor="#3B82F6" stopOpacity={0.9} />
+                      <stop offset="100%" stopColor="#93C5FD" stopOpacity={0.5} />
                     </linearGradient>
                   </defs>
                 </BarChart>
               </ResponsiveContainer>
             </div>
           ) : (
-            <p className="text-white/40">No rule frequency data.</p>
+            <p className="text-text-secondary">No rule frequency data.</p>
           )}
         </ChartTableCard>
 
@@ -215,10 +215,10 @@ export function EvidenceForensics({
                 <BarChart data={usersData}>
                   <XAxis
                     dataKey="name"
-                    stroke="#475569"
+                    stroke="#6B7280"
                     fontSize={11}
                   />
-                  <YAxis stroke="#475569" fontSize={12} />
+                  <YAxis stroke="#6B7280" fontSize={12} />
                   <Tooltip
                     contentStyle={{
                       background: "rgba(10,15,30,0.95)",
@@ -231,15 +231,15 @@ export function EvidenceForensics({
                   <Bar dataKey="count" fill="url(#userGrad)" radius={[4, 4, 0, 0]} />
                   <defs>
                     <linearGradient id="userGrad" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#a855f7" stopOpacity={0.8} />
-                      <stop offset="100%" stopColor="#a855f7" stopOpacity={0.3} />
+                      <stop offset="0%" stopColor="#60A5FA" stopOpacity={0.9} />
+                      <stop offset="100%" stopColor="#93C5FD" stopOpacity={0.5} />
                     </linearGradient>
                   </defs>
                 </BarChart>
               </ResponsiveContainer>
             </div>
           ) : (
-            <p className="text-white/40">No user data.</p>
+            <p className="text-text-secondary">No user data.</p>
           )}
         </ChartTableCard>
       </motion.div>
@@ -247,7 +247,7 @@ export function EvidenceForensics({
       <motion.div variants={fadeUp}>
         <Card>
           <div className="mb-4 flex items-center gap-2">
-            <Clock className="h-4 w-4 text-accent/60" />
+            <Clock className="h-4 w-4 text-primary/70" />
             <h3 className="text-lg font-semibold text-white">
               Key Timestamps
             </h3>
@@ -257,15 +257,15 @@ export function EvidenceForensics({
               <table className="w-full text-sm">
                 <tbody>
                   {timestamps.map((ts, i) => (
-                    <tr key={i} className="border-b border-white/[0.04] transition-colors hover:bg-accent/[0.03]">
-                      <td className="py-1.5 font-mono text-xs text-accent/50">{String(ts)}</td>
+                    <tr key={i} className="border-b border-border-soft transition-colors hover:bg-primary/[0.03]">
+                      <td className="py-1.5 font-mono text-xs text-primary/70">{String(ts)}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
           ) : (
-            <p className="text-white/40">
+            <p className="text-text-secondary">
               No timestamps in final evidence pack.
             </p>
           )}
@@ -275,7 +275,7 @@ export function EvidenceForensics({
       <motion.div variants={fadeUp}>
         <Card>
           <div className="mb-4 flex items-center gap-2">
-            <Table2 className="h-4 w-4 text-accent/60" />
+            <Table2 className="h-4 w-4 text-primary/70" />
             <h3 className="text-lg font-semibold text-white">
               Full Alert Evidence Table
             </h3>
@@ -284,20 +284,20 @@ export function EvidenceForensics({
             <div className="max-h-96 overflow-auto">
               <table className="w-full text-xs">
                 <thead>
-                  <tr className="border-b border-white/[0.06] text-left">
-                    <th className="pb-2 pr-2 text-[11px] font-medium uppercase tracking-wider text-white/30">Time</th>
-                    <th className="pb-2 pr-2 text-[11px] font-medium uppercase tracking-wider text-white/30">Rule</th>
-                    <th className="pb-2 pr-2 text-[11px] font-medium uppercase tracking-wider text-white/30">Process</th>
-                    <th className="pb-2 text-[11px] font-medium uppercase tracking-wider text-white/30">User</th>
+                  <tr className="border-b border-border-soft text-left">
+                    <th className="pb-2 pr-2 text-[11px] font-medium uppercase tracking-wider text-text-secondary">Time</th>
+                    <th className="pb-2 pr-2 text-[11px] font-medium uppercase tracking-wider text-text-secondary">Rule</th>
+                    <th className="pb-2 pr-2 text-[11px] font-medium uppercase tracking-wider text-text-secondary">Process</th>
+                    <th className="pb-2 text-[11px] font-medium uppercase tracking-wider text-text-secondary">User</th>
                   </tr>
                 </thead>
                 <tbody>
                   {alerts.map((a, i) => (
                     <tr
                       key={i}
-                      className="border-b border-white/[0.04] text-white/70 transition-colors hover:bg-accent/[0.03]"
+                      className="border-b border-border-soft text-text-primary transition-colors hover:bg-primary/[0.03]"
                     >
-                      <td className="py-1.5 pr-2 font-mono text-accent/50">
+                      <td className="py-1.5 pr-2 font-mono text-primary/70">
                         {String(a.time ?? "-").slice(0, 19)}
                       </td>
                       <td className="max-w-[180px] truncate py-1.5 pr-2">
@@ -313,7 +313,7 @@ export function EvidenceForensics({
               </table>
             </div>
           ) : (
-            <p className="text-white/40">No alert evidence available.</p>
+            <p className="text-text-secondary">No alert evidence available.</p>
           )}
         </Card>
       </motion.div>

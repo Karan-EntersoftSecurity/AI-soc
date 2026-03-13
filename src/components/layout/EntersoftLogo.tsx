@@ -46,8 +46,8 @@ export function EntersoftLogo() {
               x2="100%"
               y2="100%"
             >
-              <stop offset="0%" stopColor="#4DCAF0" />
-              <stop offset="100%" stopColor="#00b8d4" />
+              <stop offset="0%" stopColor="#1E6BD6" />
+              <stop offset="100%" stopColor="#2563EB" />
             </linearGradient>
           </defs>
           <path
@@ -66,9 +66,10 @@ export function EntersoftLogo() {
         </svg>
       </div>
       <span
-        className="text-lg font-bold tracking-widest text-white sm:text-xl"
+        className="text-lg font-bold tracking-widest text-text-primary sm:text-xl"
         style={{
-          textShadow: "0 0 12px rgba(77, 202, 240, 0.4), 0 0 24px rgba(77, 202, 240, 0.15)",
+          textShadow:
+            "0 0 12px rgba(30, 107, 214, 0.15), 0 0 24px rgba(30, 107, 214, 0.08)",
         }}
       >
         ENTERSOFT

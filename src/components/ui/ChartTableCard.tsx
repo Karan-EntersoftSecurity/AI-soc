@@ -55,15 +55,15 @@ export function ChartTableCard({
   return (
     <Card>
       <div className="mb-4 flex items-center justify-between">
-        <h3 className="text-lg font-semibold text-white">{title}</h3>
-        <div className="flex items-center gap-1 rounded-lg border border-white/[0.06] bg-white/[0.02] p-0.5">
+        <h3 className="text-lg font-semibold text-text-primary">{title}</h3>
+        <div className="flex items-center gap-1 rounded-lg border border-border-soft bg-soft-ui-blue p-0.5">
           <button
             onClick={() => setView("chart")}
             title="Chart view"
             className={`rounded-md p-1.5 transition-all duration-200 ${
               view === "chart"
-                ? "bg-accent/15 text-accent shadow-glow-sm"
-                : "text-white/40 hover:bg-white/[0.06] hover:text-white/70"
+                ? "bg-soft-ui-blue text-primary shadow-glow-sm"
+                : "text-text-secondary hover:bg-hover-highlight hover:text-text-primary"
             }`}
           >
             <BarChart3 className="h-4 w-4" />
@@ -73,17 +73,17 @@ export function ChartTableCard({
             title="Table view"
             className={`rounded-md p-1.5 transition-all duration-200 ${
               view === "table"
-                ? "bg-accent/15 text-accent shadow-glow-sm"
-                : "text-white/40 hover:bg-white/[0.06] hover:text-white/70"
+                ? "bg-soft-ui-blue text-primary shadow-glow-sm"
+                : "text-text-secondary hover:bg-hover-highlight hover:text-text-primary"
             }`}
           >
             <Table2 className="h-4 w-4" />
           </button>
-          <div className="mx-0.5 h-4 w-px bg-white/[0.08]" />
+          <div className="mx-0.5 h-4 w-px bg-border-soft" />
           <button
             onClick={() => downloadCSV(columns, data, csvFilename)}
             title="Download CSV"
-            className="rounded-md p-1.5 text-white/40 transition-all duration-200 hover:bg-white/[0.06] hover:text-accent"
+            className="rounded-md p-1.5 text-text-secondary transition-all duration-200 hover:bg-hover-highlight hover:text-primary"
           >
             <Download className="h-4 w-4" />
           </button>
@@ -93,17 +93,17 @@ export function ChartTableCard({
       {view === "chart" ? (
         children
       ) : (
-        <div className="overflow-auto rounded-lg border border-white/[0.06]">
-          <table className="w-full text-sm text-white/90">
+        <div className="overflow-auto rounded-lg border border-border-soft">
+          <table className="w-full text-sm text-text-primary">
             <thead>
-              <tr className="border-b border-white/[0.06] bg-white/[0.03]">
-                <th className="px-4 py-2.5 text-left text-xs font-medium uppercase tracking-wider text-white/30">
+              <tr className="border-b border-border-soft bg-soft-ui-blue">
+                <th className="px-4 py-2.5 text-left text-xs font-medium uppercase tracking-wider text-text-secondary">
                   #
                 </th>
                 {columns.map((col) => (
                   <th
                     key={col.key}
-                    className="px-4 py-2.5 text-left text-xs font-medium uppercase tracking-wider text-white/30"
+                    className="px-4 py-2.5 text-left text-xs font-medium uppercase tracking-wider text-text-secondary"
                   >
                     {col.label}
                   </th>
@@ -114,9 +114,9 @@ export function ChartTableCard({
               {data.map((row, i) => (
                 <tr
                   key={i}
-                  className="border-b border-white/[0.04] last:border-b-0 transition-colors hover:bg-accent/[0.04]"
+                  className="border-b border-border-soft last:border-b-0 transition-colors hover:bg-hover-highlight/50"
                 >
-                  <td className="px-4 py-2.5 text-white/30 font-mono text-xs">{i}</td>
+                  <td className="px-4 py-2.5 text-text-secondary font-mono text-xs">{i}</td>
                   {columns.map((col) => (
                     <td key={col.key} className="px-4 py-2.5">
                       {String(row[col.key] ?? "")}
@@ -128,7 +128,7 @@ export function ChartTableCard({
                 <tr>
                   <td
                     colSpan={columns.length + 1}
-                    className="px-4 py-8 text-center text-white/30"
+                    className="px-4 py-8 text-center text-text-secondary"
                   >
                     No data available.
                   </td>

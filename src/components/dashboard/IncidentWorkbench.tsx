@@ -72,10 +72,10 @@ export function IncidentWorkbench({
       className="space-y-6"
     >
       <motion.div variants={fadeUp} className="flex items-center gap-3">
-        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-accent/10">
-          <FileWarning className="h-4 w-4 text-accent" />
+        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-soft-ui-blue">
+          <FileWarning className="h-4 w-4 text-primary" />
         </div>
-        <h2 className="text-xl font-semibold text-white">Incident Workbench</h2>
+        <h2 className="text-xl font-semibold text-text-primary">Incident Workbench</h2>
       </motion.div>
 
       <motion.div variants={fadeUp} className="grid grid-cols-2 gap-3 sm:gap-4 sm:grid-cols-4">
@@ -97,7 +97,7 @@ export function IncidentWorkbench({
       </motion.div>
 
       <motion.div variants={fadeUp}>
-        <h3 className="mb-3 text-sm font-medium uppercase tracking-wider text-white/40">
+        <h3 className="mb-3 text-sm font-medium uppercase tracking-wider text-text-primary/40">
           Manual Agent Controls
         </h3>
         <div className="flex flex-wrap gap-2">
@@ -118,25 +118,25 @@ export function IncidentWorkbench({
       <motion.div variants={fadeUp} className="grid gap-6 lg:grid-cols-[1.1fr_1fr]">
         <Card>
           <div className="mb-4 flex items-center gap-2">
-            <Clock className="h-4 w-4 text-accent/60" />
-            <h3 className="text-lg font-semibold text-white">Timeline</h3>
+            <Clock className="h-4 w-4 text-primary/60" />
+            <h3 className="text-lg font-semibold text-text-primary">Timeline</h3>
           </div>
           {timeline.length ? (
             <div className="max-h-96 overflow-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-white/[0.06] text-left">
-                    <th className="pb-2 pr-4 text-xs font-medium uppercase tracking-wider text-white/30">Time</th>
-                    <th className="pb-2 text-xs font-medium uppercase tracking-wider text-white/30">Event</th>
+                  <tr className="border-b border-border-soft text-left">
+                    <th className="pb-2 pr-4 text-xs font-medium uppercase tracking-wider text-text-primary/30">Time</th>
+                    <th className="pb-2 text-xs font-medium uppercase tracking-wider text-text-primary/30">Event</th>
                   </tr>
                 </thead>
                 <tbody>
                   {timeline.map((t, i) => (
                     <tr
                       key={i}
-                      className="border-b border-white/[0.04] text-white/80 transition-colors hover:bg-accent/[0.03]"
+                      className="border-b border-border-soft text-text-primary transition-colors hover:bg-primary/[0.03]"
                     >
-                      <td className="py-2 pr-4 font-mono text-xs text-accent/60">
+                      <td className="py-2 pr-4 font-mono text-xs text-primary/60">
                         {String(t.time ?? "-")}
                       </td>
                       <td className="py-2">{String(t.event ?? "-")}</td>
@@ -146,14 +146,14 @@ export function IncidentWorkbench({
               </table>
             </div>
           ) : (
-            <p className="text-white/40">No timeline entries.</p>
+            <p className="text-text-primary/40">No timeline entries.</p>
           )}
         </Card>
 
         <Card>
           <div className="mb-4 flex items-center gap-2">
-            <AlertCircle className="h-4 w-4 text-accent/60" />
-            <h3 className="text-lg font-semibold text-white">
+            <AlertCircle className="h-4 w-4 text-primary/60" />
+            <h3 className="text-lg font-semibold text-text-primary">
               Normalized Alerts
             </h3>
           </div>
@@ -161,20 +161,20 @@ export function IncidentWorkbench({
             <div className="max-h-96 overflow-auto">
               <table className="w-full text-xs">
                 <thead>
-                  <tr className="border-b border-white/[0.06] text-left">
-                    <th className="pb-2 pr-2 text-[11px] font-medium uppercase tracking-wider text-white/30">Time</th>
-                    <th className="pb-2 pr-2 text-[11px] font-medium uppercase tracking-wider text-white/30">Rule</th>
-                    <th className="pb-2 pr-2 text-[11px] font-medium uppercase tracking-wider text-white/30">Process</th>
-                    <th className="pb-2 text-[11px] font-medium uppercase tracking-wider text-white/30">User</th>
+                  <tr className="border-b border-border-soft text-left">
+                    <th className="pb-2 pr-2 text-[11px] font-medium uppercase tracking-wider text-text-primary/30">Time</th>
+                    <th className="pb-2 pr-2 text-[11px] font-medium uppercase tracking-wider text-text-primary/30">Rule</th>
+                    <th className="pb-2 pr-2 text-[11px] font-medium uppercase tracking-wider text-text-primary/30">Process</th>
+                    <th className="pb-2 text-[11px] font-medium uppercase tracking-wider text-text-primary/30">User</th>
                   </tr>
                 </thead>
                 <tbody>
                   {alerts.slice(0, 50).map((a, i) => (
                     <tr
                       key={i}
-                      className="border-b border-white/[0.04] text-white/70 transition-colors hover:bg-accent/[0.03]"
+                      className="border-b border-border-soft text-text-primary transition-colors hover:bg-primary/[0.03]"
                     >
-                      <td className="py-1.5 pr-2 font-mono text-accent/50">
+                      <td className="py-1.5 pr-2 font-mono text-primary/50">
                         {String(a.time ?? "-").slice(0, 19)}
                       </td>
                       <td className="max-w-[120px] truncate py-1.5 pr-2">
@@ -189,13 +189,13 @@ export function IncidentWorkbench({
                 </tbody>
               </table>
               {alerts.length > 50 && (
-                <p className="mt-2 text-xs text-white/30">
+                <p className="mt-2 text-xs text-text-primary/30">
                   Showing 50 of {alerts.length}
                 </p>
               )}
             </div>
           ) : (
-            <p className="text-white/40">No normalized alerts.</p>
+            <p className="text-text-primary/40">No normalized alerts.</p>
           )}
         </Card>
       </motion.div>
@@ -203,13 +203,13 @@ export function IncidentWorkbench({
       <motion.div variants={fadeUp}>
         <Card>
           <div className="mb-4 flex items-center gap-2">
-            <Layers className="h-4 w-4 text-accent/60" />
-            <h3 className="text-lg font-semibold text-white">
+            <Layers className="h-4 w-4 text-primary/60" />
+            <h3 className="text-lg font-semibold text-text-primary">
               Agent Outputs
             </h3>
           </div>
           {Object.keys(agentResults).length === 0 ? (
-            <p className="text-white/40">
+            <p className="text-text-primary/40">
               No agent outputs yet. Run one or more agents from the sidebar or
               buttons above.
             </p>

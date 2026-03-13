@@ -62,23 +62,23 @@ function ConfidenceBar({ value }: { value: number }) {
       ? "from-severity-critical to-severity-high"
       : pct >= 50
         ? "from-severity-medium to-severity-medium"
-        : "from-cyber-green to-cyber-green";
+        : "from-success to-success";
 
   return (
     <div className="flex items-center gap-3">
-      <div className="h-2 flex-1 overflow-hidden rounded-full bg-white/[0.06]">
+      <div className="h-2 flex-1 overflow-hidden rounded-full bg-border-soft/60">
         <div
           className={`h-full rounded-full bg-gradient-to-r ${color} transition-all duration-700`}
           style={{ width: `${pct}%` }}
         />
       </div>
-      <span className="text-sm font-semibold text-white">{pct}%</span>
+      <span className="text-sm font-semibold text-text-primary">{pct}%</span>
     </div>
   );
 }
 
 function RenderValue({ keyName, value }: { keyName: string; value: unknown }) {
-  if (value == null) return <span className="text-white/30">-</span>;
+  if (value == null) return <span className="text-text-secondary">-</span>;
 
   const k = keyName.toLowerCase();
 
@@ -122,11 +122,11 @@ function RenderValue({ keyName, value }: { keyName: string; value: unknown }) {
   }
 
   if (typeof value === "number") {
-    return <span className="font-mono text-white">{value}</span>;
+    return <span className="font-mono text-text-primary">{value}</span>;
   }
 
   if (isStringArray(value)) {
-    if (value.length === 0) return <span className="text-white/30">None</span>;
+    if (value.length === 0) return <span className="text-text-secondary">None</span>;
     if (
       k.includes("rule") ||
       k.includes("process") ||
@@ -147,8 +147,8 @@ function RenderValue({ keyName, value }: { keyName: string; value: unknown }) {
     return (
       <ul className="space-y-1.5">
         {value.map((v, i) => (
-          <li key={i} className="flex gap-2 text-sm text-white/70">
-            <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-accent/50" />
+          <li key={i} className="flex gap-2 text-sm text-text-primary">
+            <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-primary/50" />
             {v}
           </li>
         ))}
@@ -162,13 +162,13 @@ function RenderValue({ keyName, value }: { keyName: string; value: unknown }) {
         {value.map((item, i) => (
           <div
             key={i}
-            className="rounded-lg border border-white/[0.04] bg-white/[0.02] p-3"
+            className="rounded-lg border border-border-soft bg-soft-ui-blue p-3"
           >
             <div className="grid gap-1.5">
               {Object.entries(item).map(([k2, v2]) => (
                 <div key={k2} className="flex gap-2 text-sm">
-                  <span className="shrink-0 text-white/40">{formatKey(k2)}:</span>
-                  <span className="text-white/80">{String(v2 ?? "-")}</span>
+                  <span className="shrink-0 text-text-primary/40">{formatKey(k2)}:</span>
+                  <span className="text-text-primary/80">{String(v2 ?? "-")}</span>
                 </div>
               ))}
             </div>
@@ -181,12 +181,12 @@ function RenderValue({ keyName, value }: { keyName: string; value: unknown }) {
   if (typeof value === "object" && !Array.isArray(value)) {
     const obj = value as Record<string, unknown>;
     return (
-      <div className="rounded-lg border border-white/[0.04] bg-white/[0.02] p-3">
+      <div className="rounded-lg border border-border-soft bg-soft-ui-blue p-3">
         <div className="grid gap-1.5">
           {Object.entries(obj).map(([k2, v2]) => (
             <div key={k2} className="flex gap-2 text-sm">
-              <span className="shrink-0 text-white/40">{formatKey(k2)}:</span>
-              <span className="text-white/80">
+              <span className="shrink-0 text-text-primary/40">{formatKey(k2)}:</span>
+              <span className="text-text-primary/80">
                 {typeof v2 === "object"
                   ? JSON.stringify(v2, null, 2)
                   : String(v2 ?? "-")}
@@ -201,13 +201,13 @@ function RenderValue({ keyName, value }: { keyName: string; value: unknown }) {
   const str = String(value);
   if (str.length > 200) {
     return (
-      <div className="rounded-lg border border-white/[0.04] bg-white/[0.02] p-3 text-sm text-white/70 leading-relaxed">
+      <div className="rounded-lg border border-border-soft bg-soft-ui-blue p-3 text-sm text-text-primary leading-relaxed">
         {str}
       </div>
     );
   }
 
-  return <span className="text-sm text-white/80">{str}</span>;
+  return <span className="text-sm text-text-primary/80">{str}</span>;
 }
 
 const KEY_ORDER = [
@@ -243,15 +243,15 @@ function sortKeys(keys: string[]): string[] {
 function getFieldIcon(key: string) {
   const k = key.toLowerCase();
   if (k.includes("verdict") || k.includes("decision"))
-    return <AlertCircle className="h-3.5 w-3.5 text-accent/40" />;
+    return <AlertCircle className="h-3.5 w-3.5 text-primary/40" />;
   if (k.includes("confidence"))
-    return <ShieldCheck className="h-3.5 w-3.5 text-accent/40" />;
+    return <ShieldCheck className="h-3.5 w-3.5 text-primary/40" />;
   if (k.includes("reason") || k.includes("summary"))
-    return <Info className="h-3.5 w-3.5 text-accent/40" />;
+    return <Info className="h-3.5 w-3.5 text-primary/40" />;
   if (k.includes("escalat"))
-    return <AlertTriangle className="h-3.5 w-3.5 text-accent/40" />;
+    return <AlertTriangle className="h-3.5 w-3.5 text-primary/40" />;
   if (k.includes("rule") || k.includes("process") || k.includes("evidence"))
-    return <List className="h-3.5 w-3.5 text-accent/40" />;
+    return <List className="h-3.5 w-3.5 text-primary/40" />;
   return null;
 }
 
@@ -262,7 +262,7 @@ interface TriageTraceRendererProps {
 export function TriageTraceRenderer({ triageTrace }: TriageTraceRendererProps) {
   const entries = Object.entries(triageTrace);
   if (entries.length === 0) {
-    return <p className="text-white/40">No triage trace available.</p>;
+    return <p className="text-text-primary/40">No triage trace available.</p>;
   }
 
   return (
@@ -283,24 +283,24 @@ export function TriageTraceRenderer({ triageTrace }: TriageTraceRendererProps) {
         return (
           <details
             key={agentName}
-            className="group rounded-xl border border-white/[0.06] bg-white/[0.02] transition-colors hover:border-accent/15 open:border-accent/20"
+            className="group rounded-xl border border-border-soft bg-soft-ui-blue transition-colors hover:border-primary/15 open:border-primary/20"
           >
             <summary className="flex cursor-pointer items-center gap-3 px-4 py-3">
-              <ChevronDown className="h-4 w-4 text-accent/60 transition-transform duration-200 group-open:rotate-180" />
-              <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-accent/10">
+              <ChevronDown className="h-4 w-4 text-primary/60 transition-transform duration-200 group-open:rotate-180" />
+              <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-primary/10">
                 <Icon className="h-3.5 w-3.5 text-accent" />
               </div>
-              <span className="text-sm font-semibold text-white">
+              <span className="text-sm font-semibold text-text-primary">
                 {meta.label}
               </span>
-              <span className="ml-auto text-[11px] text-white/30">
+              <span className="ml-auto text-[11px] text-text-secondary">
                 {keys.length} fields
               </span>
             </summary>
 
-            <div className="border-t border-white/[0.06] px-4 py-4">
+            <div className="border-t border-border-soft px-4 py-4">
               {keys.length === 0 ? (
-                <p className="text-sm text-white/40">No output data.</p>
+                <p className="text-sm text-text-primary/40">No output data.</p>
               ) : (
                 <div className="space-y-4">
                   {keys.map((key) => {
@@ -309,7 +309,7 @@ export function TriageTraceRenderer({ triageTrace }: TriageTraceRendererProps) {
                       <div key={key}>
                         <div className="mb-1.5 flex items-center gap-1.5">
                           {icon}
-                          <span className="text-[11px] font-semibold uppercase tracking-wider text-white/40">
+                          <span className="text-[11px] font-semibold uppercase tracking-wider text-text-primary/40">
                             {formatKey(key)}
                           </span>
                         </div>

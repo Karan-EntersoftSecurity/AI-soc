@@ -18,13 +18,13 @@ interface ButtonProps {
 
 const variantStyles = {
   primary:
-    "bg-gradient-to-r from-accent/90 to-accent text-primary-dark font-semibold shadow-glow-sm hover:shadow-glow-md border border-accent/50",
+    "bg-btn-primary text-white font-semibold shadow-glow-sm hover:bg-btn-hover border border-btn-primary/80",
   secondary:
-    "bg-primary-light text-white hover:bg-primary border border-white/[0.08]",
+    "bg-soft-ui-blue text-text-primary hover:bg-hover-highlight border border-border-soft",
   outline:
-    "bg-transparent text-accent border border-accent/30 hover:bg-accent/10 hover:border-accent/50",
+    "bg-transparent text-primary border border-primary/40 hover:bg-soft-ui-blue hover:border-primary/60",
   ghost:
-    "bg-transparent text-white/70 hover:bg-white/[0.05] hover:text-white border border-transparent",
+    "bg-transparent text-text-secondary hover:bg-hover-highlight hover:text-text-primary border border-transparent",
 };
 
 export function Button({

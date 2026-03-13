@@ -1,24 +1,27 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState, useEffect, type ComponentType } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  RefreshCw,
+  Zap,
+  Brain,
+  Link2,
+  ShieldCheck,
+  AlertTriangle,
+  Microscope,
+  X,
+} from "lucide-react";
 import type { DashboardPage } from "@/types";
 import { Button } from "@/components/ui/Button";
-import {
-  LayoutDashboard,
-  Wrench,
-  Zap,
-  Fingerprint,
-  Share2,
-  RefreshCw,
-  Play,
-  FileText,
-  GitBranch,
-  ShieldCheck,
-  ArrowUpCircle,
-  Search,
-  Bot,
-  PanelLeftClose,
-} from "@/components/icons";
+import { LayoutGrid } from "@/components/ui/icons/LayoutGrid";
+import { AnimatedWrench } from "@/components/ui/icons/AnimatedWrench";
+import { AnimatedBot } from "@/components/ui/icons/AnimatedBot";
+import { AnimatedSearch } from "@/components/ui/icons/AnimatedSearch";
+import { AnimatedArrowRightLeft } from "@/components/ui/icons/AnimatedArrowRightLeft";
+import type { LucideIcon } from "lucide-react";
+
+type AnimatedIcon = ComponentType<{ className?: string; animate?: boolean }>;
 
 interface SidebarProps {
   open: boolean;
@@ -31,28 +34,71 @@ interface SidebarProps {
   loading: boolean;
 }
 
-const PAGES: {
-  id: DashboardPage;
-  label: string;
-  Icon: React.ComponentType<{ className?: string }>;
-}[] = [
-  { id: "executive", label: "Executive Overview", Icon: LayoutDashboard },
-  { id: "workbench", label: "Incident Workbench", Icon: Wrench },
-  { id: "autonomous", label: "Autonomous AI SOC", Icon: Zap },
-  { id: "evidence", label: "Evidence & Forensics", Icon: Fingerprint },
-  { id: "l2", label: "L2 Handoff", Icon: Share2 },
+const PAGES: { id: DashboardPage; label: string; icon: AnimatedIcon }[] = [
+  { id: "executive", label: "Executive Overview", icon: LayoutGrid },
+  { id: "workbench", label: "Incident Workbench", icon: AnimatedWrench },
+  { id: "autonomous", label: "Autonomous AI SOC", icon: AnimatedBot },
+  { id: "evidence", label: "Evidence & Forensics", icon: AnimatedSearch },
+  { id: "l2", label: "L2 Handoff", icon: AnimatedArrowRightLeft },
 ];
 
-const AGENTS: {
-  name: string;
-  Icon: React.ComponentType<{ className?: string }>;
-}[] = [
-  { name: "summarizer", Icon: FileText },
-  { name: "attack_chain", Icon: GitBranch },
-  { name: "simulation_validator", Icon: ShieldCheck },
-  { name: "escalation", Icon: ArrowUpCircle },
-  { name: "investigation", Icon: Search },
+const AGENTS: { name: string; icon: LucideIcon }[] = [
+  { name: "summarizer", icon: Brain },
+  { name: "attack_chain", icon: Link2 },
+  { name: "simulation_validator", icon: ShieldCheck },
+  { name: "escalation", icon: AlertTriangle },
+  { name: "investigation", icon: Microscope },
 ];
+
+function NavItems({
+  page,
+  onPageChange,
+}: {
+  page: DashboardPage;
+  onPageChange: (page: DashboardPage) => void;
+}) {
+  const [hoveredId, setHoveredId] = useState<DashboardPage | null>(null);
+
+  return (
+    <nav className="mt-3 flex flex-col gap-0.5 px-2">
+      {PAGES.map(({ id, label, icon: Icon }, i) => {
+        const active = page === id;
+
+        return (
+          <motion.button
+            key={id}
+            initial={{ opacity: 0, x: -12 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: i * 0.06, duration: 0.3 }}
+            onClick={() => onPageChange(id)}
+            onMouseEnter={() => setHoveredId(id)}
+            onMouseLeave={() => setHoveredId(null)}
+            className={`
+              group relative flex items-center gap-3 rounded-lg px-3 py-2 text-left text-sm font-medium transition-all duration-300
+              ${active
+                ? "bg-soft-ui-blue text-primary shadow-glow-sm"
+                : "text-text-secondary hover:bg-hover-highlight hover:text-text-primary"
+              }
+            `}
+          >
+            {active && (
+              <motion.div
+                layoutId="sidebar-indicator"
+                className="absolute -left-2 inset-y-1 w-[3px] rounded-r-full bg-primary shadow-glow-accent"
+                transition={{ type: "spring", stiffness: 350, damping: 30 }}
+              />
+            )}
+            <Icon
+              animate={hoveredId === id}
+              className={`h-4 w-4 shrink-0 transition-colors ${active ? "text-primary" : "text-text-secondary group-hover:text-primary"}`}
+            />
+            <span className="leading-tight">{label}</span>
+          </motion.button>
+        );
+      })}
+    </nav>
+  );
+}
 
 export function Sidebar({
   open,
@@ -64,124 +110,136 @@ export function Sidebar({
   onRunAgent,
   loading,
 }: SidebarProps) {
-  return (
+  useEffect(() => {
+    if (open) document.body.style.overflow = "hidden";
+    else document.body.style.overflow = "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
+
+  const content = (
     <>
-      {open && (
-        <div
-          className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm md:hidden"
+      <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent pointer-events-none" />
+
+      <div className="flex items-center justify-between border-b border-border-soft px-4 py-3 md:hidden">
+        <span className="text-sm font-semibold text-text-primary">Menu</span>
+        <button
+          type="button"
           onClick={onClose}
-          onKeyDown={(e) => e.key === "Escape" && onClose()}
-          role="button"
-          tabIndex={0}
-          aria-label="Close sidebar"
-        />
-      )}
-      <aside
-        className={`
-          flex shrink-0 flex-col border-r border-surface-border bg-primary-dark/80 py-6
-          transition-[transform,width] duration-300 ease-in-out
-          max-md:fixed max-md:inset-y-0 max-md:left-0 max-md:z-50 max-md:w-64 max-md:shadow-xl
-          ${open ? "max-md:translate-x-0" : "max-md:-translate-x-full"}
-          md:relative
-          ${open ? "md:w-64" : "md:w-0 md:overflow-hidden"}
-        `}
-      >
-        <div className="flex h-full w-64 shrink-0 flex-col overflow-y-auto">
-          <div className="flex items-end justify-end px-2 pt-1 md:hidden">
-            <button
-              type="button"
-              onClick={onClose}
-              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-white/60 transition-colors hover:bg-white/10 hover:text-white"
-              aria-label="Close sidebar"
-            >
-              <PanelLeftClose className="h-4 w-4" aria-hidden />
-            </button>
-          </div>
-      <nav className="mt-2 flex flex-col gap-0.5 px-2 md:mt-4">
-        {PAGES.map(({ id, label, Icon }, i) => (
-          <motion.button
-            key={id}
-            type="button"
-            initial={{ opacity: 0, x: -8 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: i * 0.05 }}
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              onPageChange(id);
-            }}
-            className={`
-              flex items-center gap-3 rounded-lg px-3 py-2.5 text-left text-sm font-medium transition-colors
-              ${
-                page === id
-                  ? "bg-accent/20 text-accent"
-                  : "text-white/80 hover:bg-white/5 hover:text-white"
-              }
-            `}
-          >
-            <Icon className="h-4 w-4 shrink-0" aria-hidden />
-            {label}
-          </motion.button>
-        ))}
-      </nav>
-      <div className="mt-8 border-t border-surface-border px-4 pt-6">
-        <h3 className="flex items-center gap-2 text-sm font-semibold text-white/80">
-          <RefreshCw className="h-4 w-4" aria-hidden />
-          Controls
-        </h3>
-        <div className="mt-3 flex flex-col gap-2">
-          <Button
-            type="button"
-            variant="outline"
-            fullWidth
-            onClick={onRefresh}
-            disabled={loading}
-            loading={loading}
-          >
-            <RefreshCw className="h-4 w-4 shrink-0" aria-hidden />
-            Refresh Incident Data
-          </Button>
-          <Button
-            type="button"
-            variant="primary"
-            fullWidth
-            onClick={onRunAutonomous}
-            disabled={loading}
-            loading={loading}
-          >
-            <Play className="h-4 w-4 shrink-0" aria-hidden />
-            Run Autonomous Simulation
-          </Button>
-        </div>
+          className="h-9 w-9 items-center justify-center rounded-lg text-text-secondary hover:bg-hover-highlight hover:text-text-primary flex"
+          aria-label="Close menu"
+        >
+          <X className="h-5 w-5" />
+        </button>
       </div>
-      <div className="mt-6 border-t border-surface-border px-4 pt-6">
-        <h3 className="flex items-center gap-2 text-sm font-semibold text-white/80">
-          <Bot className="h-4 w-4" aria-hidden />
-          Manual Agents
-        </h3>
-        <div className="mt-3 flex flex-col gap-2">
-          {AGENTS.map(({ name, Icon }) => {
-            const handleClick = () => {
-              onRunAgent(name);
-            };
-            return (
+
+      <div className="relative flex-1 overflow-y-auto py-4 md:py-6">
+        <div className="px-4">
+          <h2 className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-widest text-text-secondary">
+            <span className="h-px flex-1 bg-gradient-to-r from-primary/20 to-transparent" />
+            Navigation
+            <span className="h-px flex-1 bg-gradient-to-l from-primary/20 to-transparent" />
+          </h2>
+        </div>
+
+        <NavItems page={page} onPageChange={onPageChange} />
+
+        <div className="mt-6 px-4">
+          <div className="h-px bg-gradient-to-r from-transparent via-border-soft to-transparent" />
+        </div>
+
+        <div className="mt-6 px-4">
+          <h3 className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-widest text-text-secondary">
+            <span className="h-px flex-1 bg-gradient-to-r from-primary/20 to-transparent" />
+            Controls
+            <span className="h-px flex-1 bg-gradient-to-l from-primary/20 to-transparent" />
+          </h3>
+          <div className="mt-3 flex flex-col gap-2">
+            <Button
+              variant="outline"
+              fullWidth
+              onClick={onRefresh}
+              disabled={loading}
+            >
+              <RefreshCw className="h-4 w-4" />
+              Refresh Data
+            </Button>
+            <Button
+              variant="primary"
+              fullWidth
+              onClick={onRunAutonomous}
+              disabled={loading}
+            >
+              <Zap className="h-4 w-4" />
+              Run Autonomous
+            </Button>
+          </div>
+        </div>
+
+        <div className="mt-6 px-4">
+          <div className="h-px bg-gradient-to-r from-transparent via-border-soft to-transparent" />
+        </div>
+
+        <div className="mt-6 px-4 pb-6 md:pb-0">
+          <h3 className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-widest text-text-secondary">
+            <span className="h-px flex-1 bg-gradient-to-r from-primary/20 to-transparent" />
+            Agents
+            <span className="h-px flex-1 bg-gradient-to-l from-primary/20 to-transparent" />
+          </h3>
+          <div className="mt-3 flex flex-col gap-1.5">
+            {AGENTS.map(({ name, icon: Icon }) => (
               <Button
                 key={name}
-                type="button"
                 variant="ghost"
                 fullWidth
-                onClick={handleClick}
+                onClick={() => onRunAgent(name)}
                 disabled={loading}
               >
-                <Icon className="h-4 w-4 shrink-0" aria-hidden />
+                <Icon className="h-3.5 w-3.5 text-text-secondary" />
                 Run {name.replace(/_/g, " ")}
               </Button>
-            );
-          })}
+            ))}
+          </div>
         </div>
       </div>
-        </div>
+
+      <div className="absolute right-0 top-0 bottom-0 w-px bg-gradient-to-b from-primary/10 via-transparent to-primary/10 pointer-events-none" />
+    </>
+  );
+
+  return (
+    <>
+      {/* Desktop: always visible sidebar */}
+      <aside className="hidden md:flex relative w-64 flex-shrink-0 flex-col border-r border-border-soft bg-sidebar backdrop-blur-sm">
+        {content}
       </aside>
+
+      {/* Mobile: overlay + drawer */}
+      <AnimatePresence>
+        {open && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm md:hidden"
+              onClick={onClose}
+              aria-hidden
+            />
+            <motion.aside
+              initial={{ x: "-100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "-100%" }}
+              transition={{ type: "tween", duration: 0.25, ease: "easeOut" }}
+              className="fixed inset-y-0 left-0 z-50 flex w-[min(280px,85vw)] flex-col border-r border-border-soft bg-sidebar shadow-xl md:hidden"
+            >
+              {content}
+            </motion.aside>
+          </>
+        )}
+      </AnimatePresence>
     </>
   );
 }

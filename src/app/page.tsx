@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { DashboardLayout } from "@/components/layout/DashboardLayout";
-import { AlertCircle, Info, Loader2 } from "@/components/icons";
 import { ExecutiveOverview } from "@/components/dashboard/ExecutiveOverview";
 import { IncidentWorkbench } from "@/components/dashboard/IncidentWorkbench";
 import { AutonomousSOC } from "@/components/dashboard/AutonomousSOC";
@@ -42,10 +41,15 @@ export default function DashboardPage() {
 
   if (incidentPayload == null) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-primary">
-        <div className="flex flex-col items-center gap-4">
-          <Loader2 className="h-10 w-10 animate-spin text-accent" aria-hidden />
-          <p className="text-white/70">Loading incident data...</p>
+      <div className="flex min-h-screen items-center justify-center bg-page">
+        <div className="absolute inset-0 bg-grid-pattern bg-grid-40 opacity-30" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-glow-gradient" />
+        <div className="relative flex flex-col items-center gap-4">
+          <div className="relative">
+            <div className="h-12 w-12 animate-spin rounded-full border-2 border-primary/30 border-t-primary" />
+            <div className="absolute inset-0 animate-pulse-ring rounded-full border border-primary/20" />
+          </div>
+          <p className="text-sm text-text-secondary">Loading incident data...</p>
         </div>
       </div>
     );
@@ -53,23 +57,23 @@ export default function DashboardPage() {
 
   if (incidentPayload && !incidentPayload.ok && incidentPayload.error) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-primary p-8">
-        <div className="max-w-md rounded-xl border border-red-500/30 bg-red-500/10 p-6 text-center">
-          <AlertCircle className="mx-auto h-12 w-12 text-red-400" aria-hidden />
-          <h2 className="mt-2 text-lg font-semibold text-red-400">
+      <div className="flex min-h-screen items-center justify-center bg-page p-4 sm:p-8">
+        <div className="absolute inset-0 bg-grid-pattern bg-grid-40 opacity-30" />
+        <div className="relative w-full max-w-md rounded-xl border border-danger/20 bg-danger/5 p-6 text-center backdrop-blur-sm">
+          <h2 className="text-lg font-semibold text-danger">
             Could not load incident
           </h2>
-          <p className="mt-2 text-sm text-white/80">
+          <p className="mt-2 text-sm text-text-primary">
             {incidentPayload.error}
           </p>
-          <p className="mt-4 text-xs text-white/60">
+          <p className="mt-4 text-xs text-text-secondary">
             Ensure the backend API is running at{" "}
             {process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000"}
           </p>
           <button
             type="button"
             onClick={() => loadIncident()}
-            className="mt-4 rounded-lg bg-accent px-4 py-2 text-sm font-medium text-primary-dark hover:bg-accent-light"
+            className="mt-4 rounded-lg bg-btn-primary px-4 py-2 text-sm font-medium text-white shadow-glow-sm transition-shadow hover:bg-btn-hover"
           >
             Retry
           </button>
@@ -80,19 +84,19 @@ export default function DashboardPage() {
 
   if (incidentPayload?.message && !incident) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-primary p-8">
-        <div className="max-w-md rounded-xl border border-surface-border bg-surface-card p-6 text-center">
-          <Info className="mx-auto h-12 w-12 text-accent" aria-hidden />
-          <h2 className="mt-2 text-lg font-semibold text-white">
+      <div className="flex min-h-screen items-center justify-center bg-page p-4 sm:p-8">
+        <div className="absolute inset-0 bg-grid-pattern bg-grid-40 opacity-30" />
+        <div className="relative w-full max-w-md rounded-xl border border-border-soft bg-card p-6 text-center backdrop-blur-sm">
+          <h2 className="text-lg font-semibold text-text-primary">
             No incident data
           </h2>
-          <p className="mt-2 text-sm text-white/70">
+          <p className="mt-2 text-sm text-text-secondary">
             {incidentPayload.message}
           </p>
           <button
             type="button"
             onClick={() => loadIncident()}
-            className="mt-4 rounded-lg bg-accent px-4 py-2 text-sm font-medium text-primary-dark hover:bg-accent-light"
+            className="mt-4 rounded-lg bg-btn-primary px-4 py-2 text-sm font-medium text-white shadow-glow-sm transition-shadow hover:bg-btn-hover"
           >
             Refresh
           </button>
@@ -111,8 +115,7 @@ export default function DashboardPage() {
       loading={loading}
     >
       {error && (
-        <div className="mb-4 flex items-center gap-2 rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-2 text-sm text-red-300">
-          <AlertCircle className="h-4 w-4 shrink-0" aria-hidden />
+        <div className="mb-4 rounded-lg border border-danger/20 bg-danger/5 px-4 py-2.5 text-sm text-danger backdrop-blur-sm">
           {error}
         </div>
       )}
